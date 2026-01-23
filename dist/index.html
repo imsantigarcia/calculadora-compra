@@ -1,0 +1,332 @@
+<!DOCTYPE html><html lang=es><meta charset=UTF-8><meta name=viewport content="width=device-width, initial-scale=1.0"><title>Calculadora Hompers - Versión Final Definitiva</title><script src=https://cdn.tailwindcss.com></script><script>tailwind.config={theme:{extend:{colors:{hompers:{lime:"#dbf5aa",dark:"#003b4d",dark2:"#043b4d",gradStart:"#033d4e",gradEnd:"#4e786f",gray:"#94A3B8"}},fontFamily:{sans:["Inter","sans-serif"]},boxShadow:{input:"0 1px 2px 0 rgba(0, 0, 0, 0.05)",card:"0 10px 30px -5px rgba(0, 0, 0, 0.05)"},animation:{"fade-in-up":"fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards",shake:"shake 0.5s cubic-bezier(.36,.07,.19,.97) both"},keyframes:{fadeInUp:{"0%":{opacity:"0",transform:"translateY(20px)"},"100%":{opacity:"1",transform:"translateY(0)"}},shake:{"10%, 90%":{transform:"translate3d(-1px, 0, 0)"},"20%, 80%":{transform:"translate3d(2px, 0, 0)"},"30%, 50%, 70%":{transform:"translate3d(-4px, 0, 0)"},"40%, 60%":{transform:"translate3d(4px, 0, 0)"}}}}}};</script><style>@import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap";body{-webkit-font-smoothing:antialiased;font-family:Inter,sans-serif}input[type=range]{-webkit-appearance:none;background:0 0;width:100%;margin:0}input[type=range]::-webkit-slider-runnable-track{cursor:pointer;background:#e2e8f0;border-radius:99px;width:100%;height:4px}input[type=range]::-moz-range-track{cursor:pointer;background:#e2e8f0;border-radius:99px;width:100%;height:4px}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;cursor:pointer;background:#003b4d;border:3px solid #fff;border-radius:50%;width:20px;height:20px;margin-top:-8px;transition:transform .15s;box-shadow:0 2px 5px #00000026}input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}input[type=range]::-moz-range-thumb{cursor:pointer;background:#003b4d;border:3px solid #fff;border-radius:50%;width:20px;height:20px}input:focus,select:focus{border-color:#003b4d;outline:none}.hompers-check{accent-color:#003b4d;cursor:pointer;border:2px solid #cbd5e1;border-radius:.25rem;width:1.25rem;height:1.25rem;transition:all .2s}.hompers-check:checked{border-color:#003b4d}.loader{border:3px solid #fff3;border-top-color:#dbf5aa;border-radius:50%;width:24px;height:24px;animation:.8s linear infinite spin}@keyframes spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}.input-label{text-transform:uppercase;color:#64748b;letter-spacing:.025em;margin-bottom:.5rem;font-size:.75rem;font-weight:700;display:block}.input-box{color:#1e293b;background-color:#fff;border:1px solid #cbd5e1;border-radius:.5rem;width:100%;padding:.875rem 1rem;font-size:1.125rem;font-weight:700;transition:all .2s;display:block;box-shadow:0 1px 2px #0000000d}.input-box:focus{ring:2px;ring-color:#003b4d;border-color:#003b4d}.input-error{background-color:#fef2f2!important;border-color:#ef4444!important}.text-error{color:#ef4444!important}</style><body class="bg-[#F8FAFC] flex items-center justify-center min-h-screen p-4 sm:p-8">
+
+    <div class="bg-white border border-gray-100 max-w-3xl overflow-hidden relative rounded-3xl shadow-card w-full">
+        
+        <div class="bg-gradient-to-r from-hompers-gradStart px-8 py-12 text-white to-hompers-gradEnd">
+            <p class="font-bold mb-3 text-hompers-lime text-xs tracking-wider uppercase">Calculadora de gastos de compra de una casa</p>
+            <h1 class="font-extrabold mb-3 sm:text-4xl text-3xl tracking-tight">Tu plan de compra, sin sorpresas</h1>
+            <p class="font-medium text-lg text-white/90">Calcula los gastos reales en un minuto</p>
+        </div>
+
+        <div class="p-8 sm:p-10 space-y-10">
+
+            <section class=space-y-8>
+                <div class="flex gap-3 items-center mb-2">
+                    <span class="bg-blue-50 border border-blue-100 flex font-bold h-8 items-center justify-center rounded-full text-hompers-dark text-sm w-8">1</span>
+                    <h3 class="font-bold text-gray-900 text-lg">Configura tu perfil</h3>
+                </div>
+
+                <div class="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm space-y-8">
+                    
+                    <div>
+                        <label class="input-label mb-3">¿En qué punto del proceso de compra estás?</label>
+                        <div class="gap-3 grid grid-cols-1">
+                            <label class="cursor-pointer group">
+                                <input type=radio name=estadoBusqueda value=mirando class="peer sr-only" checked>
+                                <div class="border border-gray-200 flex gap-3 hover:border-hompers-dark/50 items-center p-4 peer-checked:bg-[#003b4d]/5 peer-checked:border-hompers-dark peer-checked:text-hompers-dark rounded-xl transition-all w-full">
+                                    <div class="border-2 border-gray-300 flex h-5 items-center justify-center peer-checked:bg-hompers-dark peer-checked:border-hompers-dark rounded-full shrink-0 w-5">
+                                        <div class="bg-white h-2 rounded-full w-2"></div>
+                                    </div>
+                                    <span class="font-bold peer-checked:text-hompers-dark text-gray-700 text-left text-sm">Estoy empezando justo ahora</span>
+                                </div>
+                            </label>
+
+                            <label class="cursor-pointer group">
+                                <input type=radio name=estadoBusqueda value=buscando class="peer sr-only">
+                                <div class="border border-gray-200 flex gap-3 hover:border-hompers-dark/50 items-center p-4 peer-checked:bg-[#003b4d]/5 peer-checked:border-hompers-dark peer-checked:text-hompers-dark rounded-xl transition-all w-full">
+                                    <div class="border-2 border-gray-300 flex h-5 items-center justify-center peer-checked:bg-hompers-dark peer-checked:border-hompers-dark rounded-full shrink-0 w-5">
+                                        <div class="bg-white h-2 rounded-full w-2"></div>
+                                    </div>
+                                    <span class="font-bold peer-checked:text-hompers-dark text-gray-700 text-left text-sm">Llevo tiempo buscando y no encuentro nada</span>
+                                </div>
+                            </label>
+
+                            <label class="cursor-pointer group">
+                                <input type=radio name=estadoBusqueda value=encontrado class="peer sr-only">
+                                <div class="border border-gray-200 flex gap-3 hover:border-hompers-dark/50 items-center p-4 peer-checked:bg-[#003b4d]/5 peer-checked:border-hompers-dark peer-checked:text-hompers-dark rounded-xl transition-all w-full">
+                                    <div class="border-2 border-gray-300 flex h-5 items-center justify-center peer-checked:bg-hompers-dark peer-checked:border-hompers-dark rounded-full shrink-0 w-5">
+                                        <div class="bg-white h-2 rounded-full w-2"></div>
+                                    </div>
+                                    <span class="font-bold peer-checked:text-hompers-dark text-gray-700 text-left text-sm">He encontrado un inmueble que me encaja</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <hr class=border-gray-100>
+
+                    <div>
+                        <label class="input-label mb-3">¿Tienes resuelta la financiación?</label>
+                        <div class="gap-3 grid grid-cols-1">
+                            <label class="cursor-pointer group">
+                                <input type=radio name=estadoHipoteca value=no class="peer sr-only" checked>
+                                <div class="border border-gray-200 flex gap-3 hover:border-hompers-dark/50 items-center p-4 peer-checked:bg-[#003b4d]/5 peer-checked:border-hompers-dark peer-checked:text-hompers-dark rounded-xl transition-all w-full">
+                                    <div class="border-2 border-gray-300 flex h-5 items-center justify-center peer-checked:bg-hompers-dark peer-checked:border-hompers-dark rounded-full shrink-0 w-5">
+                                        <div class="bg-white h-2 rounded-full w-2"></div>
+                                    </div>
+                                    <span class="font-bold peer-checked:text-hompers-dark text-gray-700 text-left text-sm">No, aún no he empezado</span>
+                                </div>
+                            </label>
+
+                            <label class="cursor-pointer group">
+                                <input type=radio name=estadoHipoteca value=mirando class="peer sr-only">
+                                <div class="border border-gray-200 flex gap-3 hover:border-hompers-dark/50 items-center p-4 peer-checked:bg-[#003b4d]/5 peer-checked:border-hompers-dark peer-checked:text-hompers-dark rounded-xl transition-all w-full">
+                                    <div class="border-2 border-gray-300 flex h-5 items-center justify-center peer-checked:bg-hompers-dark peer-checked:border-hompers-dark rounded-full shrink-0 w-5">
+                                        <div class="bg-white h-2 rounded-full w-2"></div>
+                                    </div>
+                                    <span class="font-bold peer-checked:text-hompers-dark text-gray-700 text-left text-sm">Ya he recibido algunas ofertas</span>
+                                </div>
+                            </label>
+
+                            <label class="cursor-pointer group">
+                                <input type=radio name=estadoHipoteca value=si class="peer sr-only">
+                                <div class="border border-gray-200 flex gap-3 hover:border-hompers-dark/50 items-center p-4 peer-checked:bg-[#003b4d]/5 peer-checked:border-hompers-dark peer-checked:text-hompers-dark rounded-xl transition-all w-full">
+                                    <div class="border-2 border-gray-300 flex h-5 items-center justify-center peer-checked:bg-hompers-dark peer-checked:border-hompers-dark rounded-full shrink-0 w-5">
+                                        <div class="bg-white h-2 rounded-full w-2"></div>
+                                    </div>
+                                    <span class="font-bold peer-checked:text-hompers-dark text-gray-700 text-left text-sm">Sí, tengo una hipoteca preaprobada</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <hr class=border-gray-100>
+
+                    <div>
+                        <label class="input-label mb-3">¿Qué opción describe mejor tu situación?</label>
+                        <div class="gap-3 grid grid-cols-1">
+                            <label class="cursor-pointer group">
+                                <input type=radio name=bonificacion value=ninguna class="peer sr-only" checked>
+                                <div class="border border-gray-200 flex gap-3 hover:border-hompers-dark/50 items-center p-4 peer-checked:bg-[#003b4d]/5 peer-checked:border-hompers-dark peer-checked:text-hompers-dark rounded-xl transition-all w-full">
+                                    <div class="border-2 border-gray-300 flex h-5 items-center justify-center peer-checked:bg-hompers-dark peer-checked:border-hompers-dark rounded-full shrink-0 w-5">
+                                        <div class="bg-white h-2 rounded-full w-2"></div>
+                                    </div>
+                                    <div class="flex flex-col text-left">
+                                        <span class="font-bold peer-checked:text-hompers-dark text-gray-700 text-sm">No tengo bonificaciones fiscales</span>
+                                        <span class="peer-checked:text-hompers-dark/70 text-gray-500 text-xs">Se aplicará un ITP del 10%</span>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="cursor-pointer group">
+                                <input type=radio name=bonificacion value=joven class="peer sr-only">
+                                <div class="border border-gray-200 flex gap-3 hover:border-hompers-dark/50 items-center p-4 peer-checked:bg-[#003b4d]/5 peer-checked:border-hompers-dark peer-checked:text-hompers-dark rounded-xl transition-all w-full">
+                                    <div class="border-2 border-gray-300 flex h-5 items-center justify-center peer-checked:bg-hompers-dark peer-checked:border-hompers-dark rounded-full shrink-0 w-5">
+                                        <div class="bg-white h-2 rounded-full w-2"></div>
+                                    </div>
+                                    <div class="flex flex-col text-left">
+                                        <span class="font-bold peer-checked:text-hompers-dark text-gray-700 text-sm">Soy o somos menores de 35 años</span>
+                                        <span class="peer-checked:text-hompers-dark text-green-600 text-xs">Se aplicará un ITP del 5%</span>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="cursor-pointer group">
+                                <input type=radio name=bonificacion value=familia class="peer sr-only">
+                                <div class="border border-gray-200 flex gap-3 hover:border-hompers-dark/50 items-center p-4 peer-checked:bg-[#003b4d]/5 peer-checked:border-hompers-dark peer-checked:text-hompers-dark rounded-xl transition-all w-full">
+                                    <div class="border-2 border-gray-300 flex h-5 items-center justify-center peer-checked:bg-hompers-dark peer-checked:border-hompers-dark rounded-full shrink-0 w-5">
+                                        <div class="bg-white h-2 rounded-full w-2"></div>
+                                    </div>
+                                    <div class="flex flex-col text-left">
+                                        <span class="font-bold peer-checked:text-hompers-dark text-gray-700 text-sm">Somos familia numerosa</span>
+                                        <span class="peer-checked:text-hompers-dark text-green-600 text-xs">Se aplicará un ITP del 5%</span>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="cursor-pointer group">
+                                <input type=radio name=bonificacion value=discapacidad class="peer sr-only">
+                                <div class="border border-gray-200 flex gap-3 hover:border-hompers-dark/50 items-center p-4 peer-checked:bg-[#003b4d]/5 peer-checked:border-hompers-dark peer-checked:text-hompers-dark rounded-xl transition-all w-full">
+                                    <div class="border-2 border-gray-300 flex h-5 items-center justify-center peer-checked:bg-hompers-dark peer-checked:border-hompers-dark rounded-full shrink-0 w-5">
+                                        <div class="bg-white h-2 rounded-full w-2"></div>
+                                    </div>
+                                    <div class="flex flex-col text-left">
+                                        <span class="font-bold peer-checked:text-hompers-dark text-gray-700 text-sm">Tengo un grado de discapacidad</span>
+                                        <span class="peer-checked:text-hompers-dark text-green-600 text-xs">Se aplicará un ITP del 5%</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <p id=msgAhorro class="animate-pulse bg-green-50 border border-green-200 flex font-bold gap-2 hidden items-center mt-3 p-3 rounded-lg text-green-600 text-xs">
+                            <svg fill=none stroke=currentColor class="h-4 w-4" viewBox="0 0 24 24"><path stroke-linecap=round stroke-linejoin=round stroke-width=2 d="m9 12 2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0"/></svg>
+                            ¡Genial! Aplicaremos el impuesto reducido del 5% en tus cálculos.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class=space-y-6>
+                <div class="flex gap-3 items-center mb-6">
+                    <span class="bg-blue-50 border border-blue-100 flex font-bold h-8 items-center justify-center rounded-full text-hompers-dark text-sm w-8">2</span>
+                    <h3 class="font-bold text-gray-900 text-lg">Datos de la operación</h3>
+                </div>
+
+                <div class="gap-6 grid grid-cols-1 items-start md:grid-cols-2">
+                    <div>
+                        <label class=input-label>Precio Compra</label>
+                        <div class="group relative">
+                            <input inputmode=numeric id=precioVivienda value=200.000 class="input-box pr-10">
+                            <span class="absolute flex font-bold group-focus-within:text-hompers-dark inset-y-0 items-center pointer-events-none pr-4 right-0 text-gray-400 text-xl">€</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class=input-label>Tipo Inmueble</label>
+                        <select id=tipoVivienda class="appearance-none bg-white cursor-pointer input-box">
+                            <option value=segunda>Segunda mano</option>
+                            <option value=nueva>Obra nueva</option>
+                        </select>
+                        <div class="absolute flex inset-y-0 items-center mt-6 pointer-events-none px-4 right-0 text-gray-500">
+                            <svg fill=none stroke=currentColor class="h-4 w-4" viewBox="0 0 24 24"><path stroke-linecap=round stroke-linejoin=round stroke-width=2 d="m19 9-7 7-7-7"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50/50 border border-gray-100 mt-8 p-6 rounded-2xl">
+                    <div class="flex items-end justify-between mb-4">
+                         <label class="input-label mb-0">Tu Ahorro Aportado (Entrada)</label>
+                         <div class="flex gap-2">
+                             <input id=inputAhorroEuros value="40.000 €" class="bg-transparent border-b border-gray-300 focus:border-hompers-dark font-bold outline-none text-hompers-dark text-lg text-right w-28">
+                             <span class=text-gray-400>/</span>
+                             <input id=inputAhorroPorcentaje value="20 %" class="bg-transparent border-b border-gray-300 focus:border-hompers-dark font-bold outline-none text-hompers-dark text-lg text-right w-12">
+                         </div>
+                    </div>
+                    <input type=range id=sliderAhorro min=0 max=100 value=20 class=w-full>
+                </div>
+
+                <div class=pt-4>
+                    <div class=group>
+                        <div class="flex font-bold gap-2 items-center mb-4 select-none text-hompers-dark text-sm">
+                            <svg fill=none stroke=currentColor class="h-4 w-4" viewBox="0 0 24 24"><path stroke-linecap=round stroke-linejoin=round stroke-width=2 d="M12 6V4m0 2a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m-6 8a2 2 0 1 0 0-4m0 4a2 2 0 1 1 0-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 1 0 0-4m0 4a2 2 0 1 1 0-4m0 4v2m0-6V4"/></svg>
+                            
+                        </div>
+                        
+                        <div class="border-gray-100 border-l-2 gap-x-8 gap-y-6 grid grid-cols-1 ml-2 pl-2 sm:grid-cols-2">
+                            <div id=rowAJD class="bg-blue-50 border border-blue-100 col-span-1 hidden p-3 rounded-lg sm:col-span-2">
+                                <div class="flex font-bold justify-between mb-2 text-hompers-dark text-xs uppercase">
+                                    <span>Impuesto AJD (1.5%)</span>
+                                    <input id=inputAJD readonly class="bg-transparent font-bold outline-none text-right">
+                                </div>
+                                <input type=range id=rangeAJD min=0 max=10000 step=10>
+                            </div>
+
+                            <div class=space-y-1>
+                                <div class="flex font-bold justify-between mb-2 text-gray-500 text-xs uppercase">
+                                    <span>Notaría</span>
+                                    <input id=inputNotaria class="bg-transparent border-b border-transparent focus:border-hompers-dark focus:text-hompers-dark font-bold outline-none text-gray-800 text-right transition-colors w-20" value="850 €">
+                                </div>
+                                <input type=range id=rangeNotaria min=300 max=2000 step=10 value=850>
+                            </div>
+
+                            <div class=space-y-1>
+                                <div class="flex font-bold justify-between mb-2 text-gray-500 text-xs uppercase">
+                                    <span>Registro</span>
+                                    <input id=inputRegistro class="bg-transparent border-b border-transparent focus:border-hompers-dark focus:text-hompers-dark font-bold outline-none text-gray-800 text-right transition-colors w-20" value="450 €">
+                                </div>
+                                <input type=range id=rangeRegistro min=200 max=1500 step=10 value=450>
+                            </div>
+
+                            <div class=space-y-1>
+                                <div class="flex font-bold justify-between mb-2 text-gray-500 text-xs uppercase">
+                                    <span>Gestoría</span>
+                                    <input id=inputGestoria class="bg-transparent border-b border-transparent focus:border-hompers-dark focus:text-hompers-dark font-bold outline-none text-gray-800 text-right transition-colors w-20" value="350 €">
+                                </div>
+                                <input type=range id=rangeGestoria min=200 max=1000 step=10 value=350>
+                            </div>
+
+                            <div class=space-y-1>
+                                <div class="flex font-bold justify-between mb-2 text-gray-500 text-xs uppercase">
+                                    <span>Tasación</span>
+                                    <input id=inputTasacion class="bg-transparent border-b border-transparent focus:border-hompers-dark focus:text-hompers-dark font-bold outline-none text-gray-800 text-right transition-colors w-20" value="300 €">
+                                </div>
+                                <input type=range id=rangeTasacion min=200 max=800 step=10 value=300>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="border-gray-100 border-t pt-8">
+                <div class="flex gap-3 items-center mb-6">
+                    <span class="bg-blue-50 border border-blue-100 flex font-bold h-8 items-center justify-center rounded-full text-hompers-dark text-sm w-8">3</span>
+                    <h3 class="font-bold text-gray-900 text-lg">¿A dónde te enviamos el informe completo?</h3>
+                </div>
+                
+                <div class=space-y-5>
+                    <input id=leadName placeholder="Tu nombre completo" class="font-normal input-box text-base">
+                    <div class="gap-5 grid grid-cols-1 md:grid-cols-2">
+                        <input type=email id=leadEmail placeholder="Correo electrónico" class="font-normal input-box text-base">
+                        <input type=tel id=leadPhone placeholder="Teléfono (WhatsApp)" class="font-normal input-box text-base">
+                    </div>
+                    
+                    <div class="pt-2 space-y-3">
+                        <label class="cursor-pointer flex gap-3 group items-start select-none">
+                            <input type=checkbox checked class="hompers-check mt-0.5">
+                            <span class="group-hover:text-gray-900 text-gray-600 text-sm">Quiero ayuda para conseguir <strong>mejores condiciones</strong> (hipoteca o negociación)</span>
+                        </label>
+                        
+                        <label class="cursor-pointer flex gap-3 group items-start select-none">
+                            <input type=checkbox id=checkPrivacy class="hompers-check mt-0.5">
+                            <span id=labelPrivacy class="group-hover:text-gray-900 text-gray-600 text-sm">He leído y acepto la política de privacidad y protección de datos*</span>
+                        </label>
+                    </div>
+
+                    <button onclick=revealResults() id=btnAction class="active:scale-[0.98] bg-hompers-dark flex font-bold gap-3 hover:bg-hompers-dark2 hover:shadow-xl items-center justify-center mt-4 py-5 rounded-xl shadow-lg text-hompers-lime text-lg transition-all w-full">
+                        <span id=btnText>Ver informe detallado</span>
+                        <div id=btnLoader class="hidden loader"></div>
+                    </button>
+                </div>
+            </section>
+
+            <div id=resultSection class="bg-white border border-gray-200 hidden mt-8 overflow-hidden relative rounded-2xl shadow-2xl">
+                <div class="bg-gradient-to-r from-hompers-gradStart h-2 to-hompers-gradEnd w-full"></div>
+                
+                <div class=p-8>
+                    <div class="flex items-center justify-between mb-8">
+                        <h2 class="font-bold text-2xl text-gray-900">Tu hoja de ruta</h2>
+                        <span class="bg-green-100 font-bold px-3 py-1 rounded-full text-green-800 text-xs tracking-wide uppercase">Cálculo Personalizado</span>
+                    </div>
+
+                    <div class="border-b border-gray-100 gap-8 grid grid-cols-1 mb-8 md:grid-cols-2 pb-8">
+                        <div>
+                            <p class="font-bold mb-1 text-gray-400 text-xs tracking-wide uppercase">Ahorro aportado</p>
+                            <p id=finalAhorro class="font-bold text-2xl text-gray-900">0 €</p>
+                        </div>
+                        <div>
+                            <p class="font-bold mb-1 text-gray-400 text-xs tracking-wide uppercase">Impuestos estimados (<span id=finalTipoImpuesto>ITP</span>)</p>
+                            <p id=finalImpuestos class="font-bold text-2xl text-blue-600">0 €</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 mb-8 p-6 rounded-xl">
+                        <h4 class="flex font-bold gap-2 items-center mb-4 text-hompers-dark text-sm uppercase">
+                            <svg fill=none stroke=currentColor class="h-4 w-4" viewBox="0 0 24 24"><path stroke-linecap=round stroke-linejoin=round stroke-width=2 d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"/></svg>
+                            Desglose de Gastos Administrativos
+                        </h4>
+                        <ul class="space-y-3 text-sm" id=listaGastos>
+                            </ul>
+                        <div class="border-gray-200 border-t flex items-center justify-between mt-4 pt-4">
+                            <span class="font-bold text-gray-700">Subtotal gastos</span>
+                            <span id=finalGastos class="font-bold text-gray-900">0 €</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-hompers-dark flex flex-col gap-4 items-center justify-between p-6 rounded-xl sm:flex-row text-white">
+                        <div>
+                            <p class="font-medium mb-1 text-hompers-lime text-sm">Ahorro necesario (aprox)</p>
+                            <p class="text-white/70 text-xs">Suma de Ahorro + Impuestos + Gastos</p>
+                        </div>
+                        <p id=finalTotal class="font-extrabold text-4xl tracking-tight">0 €</p>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-gray-500 text-sm">Hemos enviado una copia detallada a <strong id=userEmailDisplay class=text-gray-900>tu correo</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>let formatMoney=e=>new Intl.NumberFormat("es-ES",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(e),formatNumber=e=>new Intl.NumberFormat("es-ES").format(e),cleanNumber=e=>parseFloat(e.toString().replace(/\./g,"").replace(" €","").replace(" %",""))||0,elPrecio=document.getElementById("precioVivienda"),elTipo=document.getElementById("tipoVivienda"),msgAhorro=document.getElementById("msgAhorro"),radiosBonificacion=document.getElementsByName("bonificacion"),elSliderAhorro=document.getElementById("sliderAhorro"),elInputAhorroEuros=document.getElementById("inputAhorroEuros"),elInputAhorroPorcentaje=document.getElementById("inputAhorroPorcentaje"),rowAJD=document.getElementById("rowAJD"),inputAJD=document.getElementById("inputAJD"),rangeAJD=document.getElementById("rangeAJD"),inputsGastos={notaria:{el:document.getElementById("inputNotaria"),range:document.getElementById("rangeNotaria")},registro:{el:document.getElementById("inputRegistro"),range:document.getElementById("rangeRegistro")},gestoria:{el:document.getElementById("inputGestoria"),range:document.getElementById("rangeGestoria")},tasacion:{el:document.getElementById("inputTasacion"),range:document.getElementById("rangeTasacion")},ajd:{el:inputAJD,range:rangeAJD}};function checkBonificationVisibility(){let e="ninguna";for(let t of radiosBonificacion)t.checked&&(e=t.value);"ninguna"!==e&&"nueva"!==elTipo.value?msgAhorro.classList.remove("hidden"):msgAhorro.classList.add("hidden")}function updateAJD(e){if("nueva"===elTipo.value){rowAJD.classList.remove("hidden");let t=.015*e;inputAJD.value=formatNumber(t.toFixed(0))+" €",rangeAJD.max=Math.max(2*t,5e3),rangeAJD.value=t}else rowAJD.classList.add("hidden"),inputAJD.value="0 €",rangeAJD.value=0}function revealResults(){let e=document.getElementById("btnAction"),t=document.getElementById("btnText"),n=document.getElementById("btnLoader"),a=document.getElementById("resultSection"),o=document.getElementById("leadName"),r=document.getElementById("leadEmail"),l=document.getElementById("leadPhone"),i=document.getElementById("checkPrivacy"),u=document.getElementById("labelPrivacy"),d=!0,s=[o,r,l];if(s.forEach(e=>e.classList.remove("input-error")),u.classList.remove("text-error"),s.forEach(e=>{e.value.trim()||(e.classList.add("input-error"),d=!1)}),i.checked||(u.classList.add("text-error"),d=!1),!d){e.classList.add("animate-shake"),setTimeout(()=>e.classList.remove("animate-shake"),500);return}t.innerText="Analizando...",n.classList.remove("hidden"),e.disabled=!0,setTimeout(()=>{calcularFinal(),t.innerText="Recalcular escenario",n.classList.add("hidden"),e.disabled=!1,a.classList.remove("hidden"),a.classList.add("animate-fade-in-up"),a.scrollIntoView({behavior:"smooth",block:"start"});let o=document.getElementById("leadEmail").value;o&&(document.getElementById("userEmailDisplay").innerText=o)},1e3)}function calcularFinal(){let e=cleanNumber(elPrecio.value),t=cleanNumber(elInputAhorroEuros.value),n=0,a="",o=(e,t)=>{n+=t,a+=`<li class="flex justify-between items-center text-gray-600"><span>${e}</span><span class="font-medium text-gray-900">${formatNumber(t)} \u{20AC}</span></li>`};rowAJD.classList.contains("hidden")||o("Impuesto AJD (1.5%)",cleanNumber(inputAJD.value)),o("Notaría",cleanNumber(inputsGastos.notaria.el.value)),o("Registro de la Propiedad",cleanNumber(inputsGastos.registro.el.value)),o("Gestoría",cleanNumber(inputsGastos.gestoria.el.value)),o("Tasación",cleanNumber(inputsGastos.tasacion.el.value)),document.getElementById("listaGastos").innerHTML=a,document.getElementById("finalGastos").innerText=formatMoney(n);let r=.1,l="ITP 10%",i="ninguna";for(let e of radiosBonificacion)e.checked&&(i=e.value);"nueva"===elTipo.value?(r=.1,l="IVA 10%"):"ninguna"!==i&&(r=.05,l="ITP Reducido 5%");let u=e*r;document.getElementById("finalTipoImpuesto").innerText=l,document.getElementById("finalImpuestos").innerText=formatMoney(u),document.getElementById("finalAhorro").innerText=formatMoney(t);let d=t+u+n;document.getElementById("finalTotal").innerText=formatMoney(d)}elSliderAhorro.addEventListener("input",e=>{let t=parseInt(e.target.value),n=cleanNumber(elPrecio.value);elInputAhorroPorcentaje.value=t+" %",elInputAhorroEuros.value=formatNumber((t/100*n).toFixed(0))+" €"}),elPrecio.addEventListener("input",e=>{let t=e.target.value.replace(/\D/g,"");t&&(e.target.value=formatNumber(t));let n=cleanNumber(elInputAhorroPorcentaje.value),a=parseInt(t)||0;elInputAhorroEuros.value=formatNumber((n/100*a).toFixed(0))+" €",updateAJD(a)}),Object.values(inputsGastos).forEach(e=>{e.range.addEventListener("input",t=>{e.el.value=formatNumber(t.target.value)+" €"}),e.el.addEventListener("change",t=>{let n=cleanNumber(t.target.value);e.range.value=n,e.el.value=formatNumber(n)+" €"})}),elTipo.addEventListener("change",()=>{updateAJD(cleanNumber(elPrecio.value)),checkBonificationVisibility()}),radiosBonificacion.forEach(e=>e.addEventListener("change",checkBonificationVisibility)),updateAJD(cleanNumber(elPrecio.value));</script>
+
