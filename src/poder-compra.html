@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Poder de Compra - Hompers V15</title>
+    <title>Calculadora Poder de Compra - Hompers V16</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -59,7 +59,7 @@
         }
         .input-field:focus { border-color: #003b4d; }
         
-        .input-error { border-color: #EF4444 !important; }
+        .input-error { border-color: #EF4444 !important; border-width: 2px; }
         .text-error { color: #EF4444 !important; }
 
         .hompers-check {
@@ -75,7 +75,7 @@
 
     <div class="bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden border border-gray-100 relative">
         
-        <div class="bg-gradient-to-r from-hompers-gradStart to-hompers-gradEnd px-8 py-12 text-white">
+        <div class="bg-gradient-to-r from-hompers-gradStart to-hompers-gradEnd px-8 py-12 text-white text-left">
             <p class="text-hompers-lime font-bold uppercase tracking-wider text-xs mb-3">Simulador gratuito online</p>
             <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Calcula qué casa puedes comprar</h1>
             <p class="text-white/90 font-medium text-lg">Analizamos tu viabilidad para encontrar tu casa ideal</p>
@@ -132,7 +132,7 @@
             <section class="space-y-8 text-left">
                 <div class="flex items-center gap-3">
                     <span class="bg-blue-50 text-hompers-dark font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm border border-blue-100">2</span>
-                    <h3 class="font-bold text-gray-900 text-lg">Financiación y Situación</h3>
+                    <h3 class="font-bold text-gray-900 text-lg">Responde a estas preguntas</h3>
                 </div>
 
                 <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-10">
@@ -158,6 +158,35 @@
                                 <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3 text-left">
                                     <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
                                     <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">El 100%: no quiero o no puedo aportar dinero de entrada</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <hr class="border-gray-100">
+
+                    <div>
+                        <label class="input-label mb-3">¿En qué punto del proceso de compra estás?</label>
+                        <div class="grid grid-cols-1 gap-3">
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="estadoBusqueda" value="mirando" class="peer sr-only" checked>
+                                <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3 text-left">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+                                    <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">Estoy empezando justo ahora</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="estadoBusqueda" value="buscando" class="peer sr-only">
+                                <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3 text-left">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+                                    <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">Llevo tiempo buscando y no encuentro nada</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="estadoBusqueda" value="encontrado" class="peer sr-only">
+                                <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3 text-left">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+                                    <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">He encontrado un inmueble que me encaja</span>
                                 </div>
                             </label>
                         </div>
@@ -204,7 +233,7 @@
             <section class="border-t border-gray-100 pt-12 space-y-6 text-left">
                 <div class="flex items-center gap-3 mb-2">
                     <span class="bg-blue-50 text-hompers-dark font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm border border-blue-100">3</span>
-                    <h3 class="font-bold text-gray-900 text-lg">Tu estudio detallado</h3>
+                    <h3 class="font-bold text-gray-900 text-lg">Recibe el estudio ahora</h3>
                 </div>
                 <div class="space-y-4">
                     <input type="text" id="lName" placeholder="Tu nombre" class="w-full p-4 border border-gray-300 rounded-2xl font-bold outline-none focus:border-hompers-dark transition-all bg-white">
@@ -252,13 +281,9 @@
                         <p id="rTotalAhorro" class="text-2xl font-bold text-hompers-dark">0 €</p>
                     </div>
                 </div>
-
-                <div class="text-center px-4">
-                    <p class="text-[11px] text-gray-400 italic font-medium">David y Rodolfo ya están analizando estos datos para validar tu caso personalmente.</p>
-                </div>
             </div>
 
-            <div class="mt-8 px-4 text-center pb-8">
+            <div class="mt-8 px-4 text-center pb-8 border-t border-gray-50 pt-8">
                 <div class="text-xs text-gray-400 space-x-3 flex justify-center items-center">
                     <a href="#" class="hover:text-hompers-dark transition-colors">Aviso legal</a>
                     <span>|</span>
@@ -325,14 +350,13 @@
                 const tipo = document.querySelector('input[name="tipo"]:checked').value;
                 const situacion = parseFloat(document.querySelector('input[name="sit"]:checked').value);
                 
-                // FINANZAS (Hipoteca 3.5% a 30 años)
+                // FINANZAS (30 años / 3.5%)
                 const cuotaM = (ingresos - deudas) * 0.35;
                 const factorH = 0.00449; 
                 const precioMax = (cuotaM / factorH) / ltv;
                 const importeHipoteca = precioMax * ltv;
 
                 // GASTOS EXACTOS
-                // Notaría 850 + Registro 450 + Gestoría 350 + Tasación 300 = 1950 €
                 const fijos = 1950;
                 let tasaImp = (tipo === 'nueva') ? 0.10 : situacion;
                 let variables = precioMax * tasaImp;
