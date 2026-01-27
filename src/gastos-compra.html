@@ -1,200 +1,100 @@
-<!DOCTYPE html><html lang="es"><head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Hompers - Versión Final Definitiva</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = {
-    theme: {
-        extend: {
-            colors: {
-                hompers: {
-                    lime: '#dbf5aa',
-                    dark: '#003b4d',
-                    dark2: '#043b4d',
-                    gradStart: '#033d4e',
-                    gradEnd: '#4e786f',
-                    gray: '#94A3B8'
-                }
-            },
-            fontFamily: {
-                sans: [
-                    'Inter',
-                    'sans-serif'
-                ]
-            },
-            boxShadow: {
-                'input': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-                'card': '0 10px 30px -5px rgba(0, 0, 0, 0.05)'
-            },
-            animation: {
-                'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both'
-            },
-            keyframes: {
-                fadeInUp: {
-                    '0%': {
-                        opacity: '0',
-                        transform: 'translateY(20px)'
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        hompers: {
+                            lime: '#dbf5aa',      
+                            dark: '#003b4d',      
+                            dark2: '#043b4d',     
+                            gradStart: '#033d4e', 
+                            gradEnd: '#4e786f',   
+                            gray: '#94A3B8'       
+                        }
                     },
-                    '100%': {
-                        opacity: '1',
-                        transform: 'translateY(0)'
-                    }
-                },
-                shake: {
-                    '10%, 90%': {
-                        transform: 'translate3d(-1px, 0, 0)'
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
                     },
-                    '20%, 80%': {
-                        transform: 'translate3d(2px, 0, 0)'
+                    boxShadow: {
+                        'input': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                        'card': '0 10px 30px -5px rgba(0, 0, 0, 0.05)',
                     },
-                    '30%, 50%, 70%': {
-                        transform: 'translate3d(-4px, 0, 0)'
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
                     },
-                    '40%, 60%': {
-                        transform: 'translate3d(4px, 0, 0)'
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+                        }
                     }
                 }
             }
         }
-    }
-};
-
-</script>
+    </script>
     
-    <style>@import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap";
-body {
-  -webkit-font-smoothing: antialiased;
-  font-family: Inter, sans-serif;
-}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
 
-input[type="range"] {
-  -webkit-appearance: none;
-  background: none;
-  width: 100%;
-  margin: 0;
-}
+        /* Sliders */
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 0; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #E2E8F0; border-radius: 99px; }
+        input[type=range]::-moz-range-track { width: 100%; height: 4px; cursor: pointer; background: #E2E8F0; border-radius: 99px; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%;
+            background: #003b4d; border: 3px solid white; cursor: pointer; margin-top: -8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15); transition: transform 0.15s ease;
+        }
+        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+        input[type=range]::-moz-range-thumb { height: 20px; width: 20px; border-radius: 50%; background: #003b4d; border: 3px solid white; cursor: pointer; }
 
-input[type="range"]::-webkit-slider-runnable-track {
-  cursor: pointer;
-  background: #e2e8f0;
-  border-radius: 99px;
-  width: 100%;
-  height: 4px;
-}
+        input:focus, select:focus { outline: none; border-color: #003b4d; }
+        
+        /* Checkbox */
+        .hompers-check {
+            width: 1.25rem; height: 1.25rem; border-radius: 0.25rem;
+            border: 2px solid #CBD5E1; accent-color: #003b4d; cursor: pointer; transition: all 0.2s;
+        }
+        .hompers-check:checked { border-color: #003b4d; }
 
-input[type="range"]::-moz-range-track {
-  cursor: pointer;
-  background: #e2e8f0;
-  border-radius: 99px;
-  width: 100%;
-  height: 4px;
-}
+        /* Loader */
+        .loader {
+            border: 3px solid rgba(255,255,255,0.2); border-top: 3px solid #dbf5aa; border-radius: 50%;
+            width: 24px; height: 24px; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  cursor: pointer;
-  background: #003b4d;
-  border: 3px solid #fff;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  margin-top: -8px;
-  transition: transform .15s;
-  box-shadow: 0 2px 5px #00000026;
-}
-
-input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-}
-
-input[type="range"]::-moz-range-thumb {
-  cursor: pointer;
-  background: #003b4d;
-  border: 3px solid #fff;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-}
-
-input:focus, select:focus {
-  border-color: #003b4d;
-  outline: none;
-}
-
-.hompers-check {
-  accent-color: #003b4d;
-  cursor: pointer;
-  border: 2px solid #cbd5e1;
-  border-radius: .25rem;
-  width: 1.25rem;
-  height: 1.25rem;
-  transition: all .2s;
-}
-
-.hompers-check:checked {
-  border-color: #003b4d;
-}
-
-.loader {
-  border: 3px solid #fff3;
-  border-top-color: #dbf5aa;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  animation: .8s linear infinite spin;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.input-label {
-  text-transform: uppercase;
-  color: #64748b;
-  letter-spacing: .025em;
-  margin-bottom: .5rem;
-  font-size: .75rem;
-  font-weight: 700;
-  display: block;
-}
-
-.input-box {
-  color: #1e293b;
-  background-color: #fff;
-  border: 1px solid #cbd5e1;
-  border-radius: .5rem;
-  width: 100%;
-  padding: .875rem 1rem;
-  font-size: 1.125rem;
-  font-weight: 700;
-  transition: all .2s;
-  display: block;
-  box-shadow: 0 1px 2px #0000000d;
-}
-
-.input-box:focus {
-  ring: 2px;
-  ring-color: #003b4d;
-  border-color: #003b4d;
-}
-
-.input-error {
-  background-color: #fef2f2 !important;
-  border-color: #ef4444 !important;
-}
-
-.text-error {
-  color: #ef4444 !important;
-}
-</style>
+        /* Estilo Input Hompers */
+        .input-label {
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #64748B;
+            letter-spacing: 0.025em; margin-bottom: 0.5rem; display: block;
+        }
+        .input-box {
+            display: block; width: 100%; padding: 0.875rem 1rem; font-size: 1.125rem; font-weight: 700;
+            color: #1E293B; background-color: #fff; border: 1px solid #CBD5E1; border-radius: 0.5rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); transition: all 0.2s;
+        }
+        .input-box:focus { ring: 2px; ring-color: #003b4d; border-color: #003b4d; }
+        
+        .input-error { border-color: #EF4444 !important; background-color: #FEF2F2 !important; }
+        .text-error { color: #EF4444 !important; }
+    </style>
 </head>
 <body class="bg-[#F8FAFC] min-h-screen flex items-center justify-center p-4 sm:p-8">
 
@@ -220,7 +120,7 @@ input:focus, select:focus {
                         <label class="input-label mb-3">¿En qué punto del proceso de compra estás?</label>
                         <div class="grid grid-cols-1 gap-3">
                             <label class="cursor-pointer group">
-                                <input type="radio" name="estadoBusqueda" value="mirando" class="peer sr-only" checked="">
+                                <input type="radio" name="estadoBusqueda" value="mirando" class="peer sr-only" checked>
                                 <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3">
                                     <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center">
                                         <div class="w-2 h-2 bg-white rounded-full"></div>
@@ -257,7 +157,7 @@ input:focus, select:focus {
                         <label class="input-label mb-3">¿Tienes resuelta la financiación?</label>
                         <div class="grid grid-cols-1 gap-3">
                             <label class="cursor-pointer group">
-                                <input type="radio" name="estadoHipoteca" value="no" class="peer sr-only" checked="">
+                                <input type="radio" name="estadoHipoteca" value="no" class="peer sr-only" checked>
                                 <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3">
                                     <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center">
                                         <div class="w-2 h-2 bg-white rounded-full"></div>
@@ -294,7 +194,7 @@ input:focus, select:focus {
                         <label class="input-label mb-3">¿Qué opción describe mejor tu situación?</label>
                         <div class="grid grid-cols-1 gap-3">
                             <label class="cursor-pointer group">
-                                <input type="radio" name="bonificacion" value="ninguna" class="peer sr-only" checked="">
+                                <input type="radio" name="bonificacion" value="ninguna" class="peer sr-only" checked>
                                 <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3">
                                     <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center">
                                         <div class="w-2 h-2 bg-white rounded-full"></div>
@@ -395,7 +295,7 @@ input:focus, select:focus {
                 <div class="pt-4">
                     <div class="group">
                         <div class="flex items-center gap-2 font-bold text-sm text-hompers-dark mb-4 select-none">
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
                             <span>Ajustar gastos de notaría, registro y gestión</span>
                         </div>
                         
@@ -403,7 +303,7 @@ input:focus, select:focus {
                             <div id="rowAJD" class="hidden space-y-1">
                                 <div class="flex justify-between text-xs font-bold text-gray-500 uppercase mb-2">
                                     <span>Impuesto AJD (1.5%)</span>
-                                    <input type="text" id="inputAJD" readonly="" class="bg-transparent text-right font-bold text-gray-800 outline-none w-20">
+                                    <input type="text" id="inputAJD" readonly class="bg-transparent text-right font-bold text-gray-800 outline-none w-20">
                                 </div>
                                 <input type="range" id="rangeAJD" min="0" max="10000" step="10">
                             </div>
@@ -497,7 +397,7 @@ input:focus, select:focus {
 
                     <div class="bg-gray-50 rounded-xl p-6 mb-8">
                         <h4 class="text-sm font-bold text-hompers-dark uppercase mb-4 flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                             Desglose de los otros gastos e impuestos
                         </h4>
                         <ul class="space-y-3 text-sm" id="listaGastos">
@@ -535,181 +435,177 @@ input:focus, select:focus {
         </div>
     </div>
 
-    <script>const formatMoney = (n)=>new Intl.NumberFormat('es-ES', {
-        style: 'currency',
-        currency: 'EUR',
-        maximumFractionDigits: 0
-    }).format(n);
-const formatNumber = (n)=>new Intl.NumberFormat('es-ES').format(n);
-const cleanNumber = (str)=>parseFloat(str.toString().replace(/\./g, '').replace(" \u20AC", '').replace(' %', '')) || 0;
-const elPrecio = document.getElementById('precioVivienda');
-const elTipo = document.getElementById('tipoVivienda');
-const msgAhorro = document.getElementById('msgAhorro');
-const radiosBonificacion = document.getElementsByName('bonificacion');
-const elSliderAhorro = document.getElementById('sliderAhorro');
-const elInputAhorroEuros = document.getElementById('inputAhorroEuros');
-const elInputAhorroPorcentaje = document.getElementById('inputAhorroPorcentaje');
-const rowAJD = document.getElementById('rowAJD');
-const inputAJD = document.getElementById('inputAJD');
-const rangeAJD = document.getElementById('rangeAJD');
-const inputsGastos = {
-    notaria: {
-        el: document.getElementById('inputNotaria'),
-        range: document.getElementById('rangeNotaria')
-    },
-    registro: {
-        el: document.getElementById('inputRegistro'),
-        range: document.getElementById('rangeRegistro')
-    },
-    gestoria: {
-        el: document.getElementById('inputGestoria'),
-        range: document.getElementById('rangeGestoria')
-    },
-    tasacion: {
-        el: document.getElementById('inputTasacion'),
-        range: document.getElementById('rangeTasacion')
-    },
-    ajd: {
-        el: inputAJD,
-        range: rangeAJD
-    }
-};
-elSliderAhorro.addEventListener('input', (e)=>{
-    const pct = parseInt(e.target.value);
-    const precio = cleanNumber(elPrecio.value);
-    elInputAhorroPorcentaje.value = pct + " %";
-    elInputAhorroEuros.value = formatNumber((precio * (pct / 100)).toFixed(0)) + " \u20AC";
-});
-elPrecio.addEventListener('input', (e)=>{
-    let val = e.target.value.replace(/\D/g, '');
-    if (val) e.target.value = formatNumber(val);
-    const pct = cleanNumber(elInputAhorroPorcentaje.value);
-    const precio = parseInt(val) || 0;
-    elInputAhorroEuros.value = formatNumber((precio * (pct / 100)).toFixed(0)) + " \u20AC";
-    updateAJD(precio);
-});
-Object.values(inputsGastos).forEach((item)=>{
-    item.range.addEventListener('input', (e)=>{
-        item.el.value = formatNumber(e.target.value) + " \u20AC";
-    });
-    item.el.addEventListener('change', (e)=>{
-        let val = cleanNumber(e.target.value);
-        item.range.value = val;
-        item.el.value = formatNumber(val) + " \u20AC";
-    });
-});
-elTipo.addEventListener('change', ()=>{
-    updateAJD(cleanNumber(elPrecio.value));
-    checkBonificationVisibility();
-});
-radiosBonificacion.forEach((r)=>r.addEventListener('change', checkBonificationVisibility));
-function checkBonificationVisibility() {
-    let selected = 'ninguna';
-    for (const r of radiosBonificacion)if (r.checked) selected = r.value;
-    if (selected !== 'ninguna' && elTipo.value !== 'nueva') msgAhorro.classList.remove('hidden');
-    else msgAhorro.classList.add('hidden');
-}
-function updateAJD(precio) {
-    if (elTipo.value === 'nueva') {
-        rowAJD.classList.remove('hidden');
-        const valAJD = precio * 0.015;
-        inputAJD.value = formatNumber(valAJD.toFixed(0)) + " \u20AC";
-        rangeAJD.max = Math.max(valAJD * 2, 5000);
-        rangeAJD.value = valAJD;
-    } else {
-        rowAJD.classList.add('hidden');
-        inputAJD.value = "0 \u20AC";
-        rangeAJD.value = 0;
-    }
-}
-function revealResults() {
-    const btn = document.getElementById('btnAction');
-    const txt = document.getElementById('btnText');
-    const loader = document.getElementById('btnLoader');
-    const results = document.getElementById('resultSection');
-    const nameInput = document.getElementById('leadName');
-    const emailInput = document.getElementById('leadEmail');
-    const phoneInput = document.getElementById('leadPhone');
-    const privacyCheck = document.getElementById('checkPrivacy');
-    const privacyLabel = document.getElementById('labelPrivacy');
-    let isValid = true;
-    const requiredFields = [
-        nameInput,
-        emailInput,
-        phoneInput
-    ];
-    requiredFields.forEach((field)=>field.classList.remove('input-error'));
-    privacyLabel.classList.remove('text-error');
-    requiredFields.forEach((field)=>{
-        if (!field.value.trim()) {
-            field.classList.add('input-error');
-            isValid = false;
-        }
-    });
-    if (!privacyCheck.checked) {
-        privacyLabel.classList.add('text-error');
-        isValid = false;
-    }
-    if (!isValid) {
-        btn.classList.add('animate-shake');
-        setTimeout(()=>btn.classList.remove('animate-shake'), 500);
-        return;
-    }
-    txt.innerText = "Analizando...";
-    loader.classList.remove('hidden');
-    btn.disabled = true;
-    setTimeout(()=>{
-        calcularFinal();
-        txt.innerText = "Recalcular escenario";
-        loader.classList.add('hidden');
-        btn.disabled = false;
-        results.classList.remove('hidden');
-        results.classList.add('animate-fade-in-up');
-        results.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+    <script>
+        const formatMoney = (n) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+        const formatNumber = (n) => new Intl.NumberFormat('es-ES').format(n);
+        const cleanNumber = (str) => parseFloat(str.toString().replace(/\./g, '').replace(' €','').replace(' %','')) || 0;
+
+        const elPrecio = document.getElementById('precioVivienda');
+        const elTipo = document.getElementById('tipoVivienda');
+        const msgAhorro = document.getElementById('msgAhorro');
+        const radiosBonificacion = document.getElementsByName('bonificacion');
+        
+        const elSliderAhorro = document.getElementById('sliderAhorro');
+        const elInputAhorroEuros = document.getElementById('inputAhorroEuros');
+        const elInputAhorroPorcentaje = document.getElementById('inputAhorroPorcentaje');
+
+        const rowAJD = document.getElementById('rowAJD');
+        const inputAJD = document.getElementById('inputAJD');
+        const rangeAJD = document.getElementById('rangeAJD');
+
+        const inputsGastos = {
+            notaria: { el: document.getElementById('inputNotaria'), range: document.getElementById('rangeNotaria') },
+            registro: { el: document.getElementById('inputRegistro'), range: document.getElementById('rangeRegistro') },
+            gestoria: { el: document.getElementById('inputGestoria'), range: document.getElementById('rangeGestoria') },
+            tasacion: { el: document.getElementById('inputTasacion'), range: document.getElementById('rangeTasacion') },
+            ajd: { el: inputAJD, range: rangeAJD }
+        };
+
+        elSliderAhorro.addEventListener('input', (e) => {
+            const pct = parseInt(e.target.value);
+            const precio = cleanNumber(elPrecio.value);
+            elInputAhorroPorcentaje.value = pct + " %";
+            elInputAhorroEuros.value = formatNumber((precio * (pct/100)).toFixed(0)) + " €";
         });
-        const mail = document.getElementById('leadEmail').value;
-        if (mail) document.getElementById('userEmailDisplay').innerText = mail;
-    }, 1000);
-}
-function calcularFinal() {
-    const precio = cleanNumber(elPrecio.value);
-    const eurosAhorro = cleanNumber(elInputAhorroEuros.value);
-    let totalGastos = 0;
-    let listaHTML = '';
-    const addLine = (label, amount)=>{
-        totalGastos += amount;
-        listaHTML += `<li class="flex justify-between items-center text-gray-600"><span>${label}</span><span class="font-medium text-gray-900">${formatNumber(amount)} \u{20AC}</span></li>`;
-    };
-    let tasa = 0.10;
-    let nombre = "ITP 10%";
-    let bonif = 'ninguna';
-    for (const r of radiosBonificacion)if (r.checked) bonif = r.value;
-    if (elTipo.value === 'nueva') {
-        tasa = 0.10;
-        nombre = "IVA 10%";
-    } else if (bonif !== 'ninguna') {
-        tasa = 0.05;
-        nombre = "ITP Reducido 5%";
-    }
-    if (!rowAJD.classList.contains('hidden')) addLine("Impuesto AJD (1.5%)", cleanNumber(inputAJD.value));
-    addLine("Notar\xeda", cleanNumber(inputsGastos.notaria.el.value));
-    addLine("Registro de la Propiedad", cleanNumber(inputsGastos.registro.el.value));
-    addLine("Gestor\xeda", cleanNumber(inputsGastos.gestoria.el.value));
-    addLine("Tasaci\xf3n", cleanNumber(inputsGastos.tasacion.el.value));
-    document.getElementById('listaGastos').innerHTML = listaHTML;
-    // CORREGIDO: Uso explícito de formatMoney para asegurar el separador de miles en el subtotal
-    document.getElementById('finalGastos').innerText = formatMoney(totalGastos);
-    const imp = precio * tasa;
-    document.getElementById('finalTipoImpuesto').innerText = nombre;
-    document.getElementById('finalImpuestos').innerText = formatMoney(imp);
-    document.getElementById('finalAhorro').innerText = formatMoney(eurosAhorro);
-    const totalCash = eurosAhorro + imp + totalGastos;
-    document.getElementById('finalTotal').innerText = formatMoney(totalCash);
-}
-updateAJD(cleanNumber(elPrecio.value));
 
-</script>
+        elPrecio.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '');
+            if(val) e.target.value = formatNumber(val);
+            const pct = cleanNumber(elInputAhorroPorcentaje.value);
+            const precio = parseInt(val) || 0;
+            elInputAhorroEuros.value = formatNumber((precio * (pct/100)).toFixed(0)) + " €";
+            updateAJD(precio);
+        });
 
-<script src="simulador-compra.ab2256da.js"></script></body></html>
+        Object.values(inputsGastos).forEach(item => {
+            item.range.addEventListener('input', (e) => { item.el.value = formatNumber(e.target.value) + " €"; });
+            item.el.addEventListener('change', (e) => { 
+                let val = cleanNumber(e.target.value); 
+                item.range.value = val; item.el.value = formatNumber(val) + " €"; 
+            });
+        });
+
+        elTipo.addEventListener('change', () => { 
+            updateAJD(cleanNumber(elPrecio.value));
+            checkBonificationVisibility();
+        });
+        
+        radiosBonificacion.forEach(r => r.addEventListener('change', checkBonificationVisibility));
+
+        function checkBonificationVisibility() {
+            let selected = 'ninguna';
+            for(const r of radiosBonificacion) { if(r.checked) selected = r.value; }
+            
+            if(selected !== 'ninguna' && elTipo.value !== 'nueva') { msgAhorro.classList.remove('hidden'); } 
+            else { msgAhorro.classList.add('hidden'); }
+        }
+
+        function updateAJD(precio) {
+            if(elTipo.value === 'nueva') {
+                rowAJD.classList.remove('hidden');
+                const valAJD = precio * 0.015;
+                inputAJD.value = formatNumber(valAJD.toFixed(0)) + " €";
+                rangeAJD.max = Math.max(valAJD * 2, 5000); rangeAJD.value = valAJD;
+            } else { rowAJD.classList.add('hidden'); inputAJD.value = "0 €"; rangeAJD.value = 0; }
+        }
+
+        function revealResults() {
+            const btn = document.getElementById('btnAction');
+            const txt = document.getElementById('btnText');
+            const loader = document.getElementById('btnLoader');
+            const results = document.getElementById('resultSection');
+
+            const nameInput = document.getElementById('leadName');
+            const emailInput = document.getElementById('leadEmail');
+            const phoneInput = document.getElementById('leadPhone');
+            const privacyCheck = document.getElementById('checkPrivacy');
+            const privacyLabel = document.getElementById('labelPrivacy');
+
+            let isValid = true;
+            const requiredFields = [nameInput, emailInput, phoneInput];
+
+            requiredFields.forEach(field => field.classList.remove('input-error'));
+            privacyLabel.classList.remove('text-error');
+
+            requiredFields.forEach(field => {
+                if(!field.value.trim()) { field.classList.add('input-error'); isValid = false; }
+            });
+
+            if(!privacyCheck.checked) { privacyLabel.classList.add('text-error'); isValid = false; }
+
+            if(!isValid) {
+                btn.classList.add('animate-shake');
+                setTimeout(() => btn.classList.remove('animate-shake'), 500);
+                return; 
+            }
+
+            txt.innerText = "Analizando...";
+            loader.classList.remove('hidden');
+            btn.disabled = true;
+
+            setTimeout(() => {
+                calcularFinal(); 
+                txt.innerText = "Recalcular escenario";
+                loader.classList.add('hidden');
+                btn.disabled = false;
+                results.classList.remove('hidden');
+                results.classList.add('animate-fade-in-up');
+                results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                const mail = document.getElementById('leadEmail').value;
+                if(mail) document.getElementById('userEmailDisplay').innerText = mail;
+            }, 1000);
+        }
+
+        function calcularFinal() {
+            const precio = cleanNumber(elPrecio.value);
+            const eurosAhorro = cleanNumber(elInputAhorroEuros.value);
+            
+            let totalGastos = 0;
+            let listaHTML = '';
+            
+            const addLine = (label, amount) => {
+                totalGastos += amount;
+                listaHTML += `<li class="flex justify-between items-center text-gray-600"><span>${label}</span><span class="font-medium text-gray-900">${formatNumber(amount)} €</span></li>`;
+            };
+
+            let tasa = 0.10; 
+            let nombre = "ITP 10%";
+            let bonif = 'ninguna';
+            for(const r of radiosBonificacion) { if(r.checked) bonif = r.value; }
+
+            if(elTipo.value === 'nueva') { 
+                tasa = 0.10; 
+                nombre = "IVA 10%"; 
+            } else if (bonif !== 'ninguna') { 
+                tasa = 0.05; 
+                nombre = "ITP Reducido 5%"; 
+            }
+
+            if(!rowAJD.classList.contains('hidden')) { 
+                addLine("Impuesto AJD (1.5%)", cleanNumber(inputAJD.value)); 
+            }
+
+            addLine("Notaría", cleanNumber(inputsGastos.notaria.el.value));
+            addLine("Registro de la Propiedad", cleanNumber(inputsGastos.registro.el.value));
+            addLine("Gestoría", cleanNumber(inputsGastos.gestoria.el.value));
+            addLine("Tasación", cleanNumber(inputsGastos.tasacion.el.value));
+
+            document.getElementById('listaGastos').innerHTML = listaHTML;
+            
+            // CORREGIDO: Uso explícito de formatMoney para asegurar el separador de miles en el subtotal
+            document.getElementById('finalGastos').innerText = formatMoney(totalGastos);
+
+            const imp = precio * tasa;
+            document.getElementById('finalTipoImpuesto').innerText = nombre;
+            document.getElementById('finalImpuestos').innerText = formatMoney(imp);
+            document.getElementById('finalAhorro').innerText = formatMoney(eurosAhorro);
+
+            const totalCash = eurosAhorro + imp + totalGastos;
+            document.getElementById('finalTotal').innerText = formatMoney(totalCash);
+        }
+        
+        updateAJD(cleanNumber(elPrecio.value));
+    </script>
+</body>
+</html>

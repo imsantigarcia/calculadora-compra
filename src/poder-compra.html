@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Poder de Compra - Hompers V14</title>
+    <title>Calculadora Poder de Compra - Hompers V15</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -22,7 +22,22 @@
                     },
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     boxShadow: { 'card': '0 10px 30px -5px rgba(0, 0, 0, 0.05)' },
-                    animation: { 'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards' }
+                    animation: { 
+                        'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both'
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+                        }
+                    }
                 }
             }
         }
@@ -44,6 +59,9 @@
         }
         .input-field:focus { border-color: #003b4d; }
         
+        .input-error { border-color: #EF4444 !important; }
+        .text-error { color: #EF4444 !important; }
+
         .hompers-check {
             width: 1.25rem; height: 1.25rem; border-radius: 0.25rem;
             border: 2px solid #CBD5E1; accent-color: #003b4d; cursor: pointer;
@@ -188,9 +206,12 @@
                     <span class="bg-blue-50 text-hompers-dark font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm border border-blue-100">3</span>
                     <h3 class="font-bold text-gray-900 text-lg">Tu estudio detallado</h3>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" id="lName" placeholder="Tu nombre" class="w-full p-4 border border-gray-300 rounded-2xl font-bold outline-none focus:border-hompers-dark transition-all">
-                    <input type="email" id="lEmail" placeholder="Tu mejor email" class="w-full p-4 border border-gray-300 rounded-2xl font-bold outline-none focus:border-hompers-dark transition-all">
+                <div class="space-y-4">
+                    <input type="text" id="lName" placeholder="Tu nombre" class="w-full p-4 border border-gray-300 rounded-2xl font-bold outline-none focus:border-hompers-dark transition-all bg-white">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="email" id="lEmail" placeholder="Tu mejor email" class="w-full p-4 border border-gray-300 rounded-2xl font-bold outline-none focus:border-hompers-dark transition-all bg-white">
+                        <input type="tel" id="lPhone" placeholder="Teléfono de contacto" class="w-full p-4 border border-gray-300 rounded-2xl font-bold outline-none focus:border-hompers-dark transition-all bg-white">
+                    </div>
                 </div>
                 
                 <div class="space-y-3 pt-2">
@@ -200,18 +221,17 @@
                     </label>
                     <label class="flex items-start gap-3 cursor-pointer group select-none">
                         <input type="checkbox" id="lPrivacy" class="hompers-check mt-0.5">
-                        <span class="text-sm text-gray-600 group-hover:text-gray-900 italic">He leído y acepto la política de privacidad*</span>
+                        <span id="txtPrivacy" class="text-sm text-gray-600 group-hover:text-gray-900">He leído y acepto la política de privacidad*</span>
                     </label>
                 </div>
 
-                <button onclick="ejecutarAnalisis()" class="w-full bg-hompers-dark text-hompers-lime font-black py-6 rounded-2xl text-xl shadow-2xl flex items-center justify-center gap-4 active:scale-95 transition-all">
+                <button onclick="ejecutarAnalisis()" id="btnMain" class="w-full bg-hompers-dark text-hompers-lime font-black py-6 rounded-2xl text-xl shadow-2xl flex items-center justify-center gap-4 transition-all active:scale-95">
                     <span id="txtB">Analizar mi Poder de Compra</span>
                     <div id="ldB" class="loader hidden"></div>
                 </button>
             </section>
 
             <div id="res" class="hidden animate-fade-in-up space-y-6 mt-12">
-                
                 <div class="bg-white p-10 rounded-[2.5rem] text-center border-2 border-hompers-lime/50 shadow-sm">
                     <p class="text-gray-400 font-bold uppercase text-[10px] tracking-widest mb-3">Presupuesto máximo de compra</p>
                     <h2 id="rP" class="text-5xl font-black text-hompers-dark tracking-tighter mb-2">0 €</h2>
@@ -219,8 +239,7 @@
                 </div>
 
                 <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm text-left leading-relaxed">
-                    <p id="textoExplicativo" class="text-gray-700">
-                        </p>
+                    <p id="textoExplicativo" class="text-gray-700"></p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -235,7 +254,17 @@
                 </div>
 
                 <div class="text-center px-4">
-                    <p class="text-[11px] text-gray-400 italic">David y Rodolfo ya están analizando estos datos para validar tu caso. Te contactaremos pronto desde quetal@hompers.com.</p>
+                    <p class="text-[11px] text-gray-400 italic font-medium">David y Rodolfo ya están analizando estos datos para validar tu caso personalmente.</p>
+                </div>
+            </div>
+
+            <div class="mt-8 px-4 text-center pb-8">
+                <div class="text-xs text-gray-400 space-x-3 flex justify-center items-center">
+                    <a href="#" class="hover:text-hompers-dark transition-colors">Aviso legal</a>
+                    <span>|</span>
+                    <a href="#" class="hover:text-hompers-dark transition-colors">Política de privacidad</a>
+                    <span>|</span>
+                    <a href="#" class="hover:text-hompers-dark transition-colors">Política de cookies</a>
                 </div>
             </div>
 
@@ -264,8 +293,27 @@
         });
 
         function ejecutarAnalisis() {
-            if(!document.getElementById('lPrivacy').checked) { alert("Acepta la privacidad"); return; }
-            if(!document.getElementById('lEmail').value) { alert("Dinos tu email"); return; }
+            const name = document.getElementById('lName');
+            const email = document.getElementById('lEmail');
+            const phone = document.getElementById('lPhone');
+            const privacy = document.getElementById('lPrivacy');
+            const txtPrivacy = document.getElementById('txtPrivacy');
+            const btn = document.getElementById('btnMain');
+
+            let isValid = true;
+            [name, email, phone].forEach(inp => {
+                if(!inp.value.trim()) { inp.classList.add('input-error'); isValid = false; }
+                else { inp.classList.remove('input-error'); }
+            });
+
+            if(!privacy.checked) { txtPrivacy.classList.add('text-error'); isValid = false; }
+            else { txtPrivacy.classList.remove('text-error'); }
+
+            if(!isValid) {
+                btn.classList.add('animate-shake');
+                setTimeout(() => btn.classList.remove('animate-shake'), 500);
+                return;
+            }
 
             document.getElementById('ldB').classList.remove('hidden');
             document.getElementById('txtB').innerText = "Validando solvencia...";
@@ -277,27 +325,23 @@
                 const tipo = document.querySelector('input[name="tipo"]:checked').value;
                 const situacion = parseFloat(document.querySelector('input[name="sit"]:checked').value);
                 
-                // 1. FINANZAS (30 años / 3.5%)
+                // FINANZAS (Hipoteca 3.5% a 30 años)
                 const cuotaM = (ingresos - deudas) * 0.35;
                 const factorH = 0.00449; 
                 const precioMax = (cuotaM / factorH) / ltv;
                 const importeHipoteca = precioMax * ltv;
 
-                // 2. GASTOS MATCHING INDEX.HTML
+                // GASTOS EXACTOS
                 // Notaría 850 + Registro 450 + Gestoría 350 + Tasación 300 = 1950 €
                 const fijos = 1950;
                 let tasaImp = (tipo === 'nueva') ? 0.10 : situacion;
                 let variables = precioMax * tasaImp;
-                
-                if (tipo === 'nueva') {
-                    variables += (precioMax * 0.015); // AJD 1.5%
-                }
+                if (tipo === 'nueva') { variables += (precioMax * 0.015); }
 
                 const entrada = precioMax * (1 - ltv);
                 const totalGastosCompraventa = variables + fijos;
                 const ahorroTotal = entrada + totalGastosCompraventa;
 
-                // 3. PINTAR
                 document.getElementById('rP').innerText = formatM(precioMax);
                 document.getElementById('rC').innerText = formatM(cuotaM);
                 document.getElementById('rTotalAhorro').innerText = formatM(ahorroTotal);
