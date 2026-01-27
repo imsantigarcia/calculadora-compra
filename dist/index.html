@@ -400,10 +400,10 @@ input:focus, select:focus {
                         </div>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 pl-2 border-l-2 border-gray-100 ml-2">
-                            <div id="rowAJD" class="hidden col-span-1 sm:col-span-2 bg-blue-50 p-3 rounded-lg border border-blue-100">
-                                <div class="flex justify-between text-xs font-bold text-hompers-dark uppercase mb-2">
+                            <div id="rowAJD" class="hidden space-y-1">
+                                <div class="flex justify-between text-xs font-bold text-gray-500 uppercase mb-2">
                                     <span>Impuesto AJD (1.5%)</span>
-                                    <input type="text" id="inputAJD" readonly="" class="bg-transparent text-right font-bold outline-none">
+                                    <input type="text" id="inputAJD" readonly="" class="bg-transparent text-right font-bold text-gray-800 outline-none w-20">
                                 </div>
                                 <input type="range" id="rangeAJD" min="0" max="10000" step="10">
                             </div>
@@ -459,8 +459,7 @@ input:focus, select:focus {
                     
                     <div class="space-y-3 pt-2">
                         <label class="flex items-start gap-3 cursor-pointer group select-none">
-                            <input type="checkbox" checked="" class="hompers-check mt-0.5">
-                            <span class="text-sm text-gray-600 group-hover:text-gray-900">Quiero ayuda para conseguir <strong>mejores condiciones</strong> (hipoteca o negociación)</span>
+                            <input type="checkbox" class="hompers-check mt-0.5"> <span class="text-sm text-gray-600 group-hover:text-gray-900">Quiero ayuda para conseguir <strong>mejores condiciones</strong> (hipoteca o negociación)</span>
                         </label>
                         
                         <label class="flex items-start gap-3 cursor-pointer group select-none">
@@ -499,7 +498,7 @@ input:focus, select:focus {
                     <div class="bg-gray-50 rounded-xl p-6 mb-8">
                         <h4 class="text-sm font-bold text-hompers-dark uppercase mb-4 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-                            Desglose de Gastos Administrativos
+                            Desglose de los otros gastos e impuestos
                         </h4>
                         <ul class="space-y-3 text-sm" id="listaGastos">
                             </ul>
@@ -511,8 +510,8 @@ input:focus, select:focus {
 
                     <div class="bg-hompers-dark text-white p-6 rounded-xl flex flex-col sm:flex-row justify-between items-center gap-4">
                         <div>
-                            <p class="font-medium text-hompers-lime text-sm mb-1">Ahorro necesario (aprox)</p>
-                            <p class="text-xs text-white/70">Suma de Ahorro + Impuestos + Gastos</p>
+                            <p class="font-medium text-hompers-lime text-sm mb-1">Ahorro necesario</p>
+                            <p class="text-xs text-white/70">Suma de entrada + impuestos + gastos</p>
                         </div>
                         <p id="finalTotal" class="text-4xl font-extrabold tracking-tight">0 €</p>
                     </div>
@@ -520,6 +519,16 @@ input:focus, select:focus {
                     <div class="mt-6 text-center">
                         <p class="text-sm text-gray-500">Hemos enviado una copia detallada a <strong id="userEmailDisplay" class="text-gray-900">tu correo</strong>.</p>
                     </div>
+                </div>
+            </div>
+
+            <div class="mt-8 px-4 text-center">
+                <div class="text-xs text-gray-400 space-x-3 flex justify-center items-center">
+                    <a href="#" class="hover:text-hompers-dark transition-colors">Aviso legal</a>
+                    <span>|</span>
+                    <a href="#" class="hover:text-hompers-dark transition-colors">Política de privacidad</a>
+                    <span>|</span>
+                    <a href="#" class="hover:text-hompers-dark transition-colors">Política de cookies</a>
                 </div>
             </div>
             
@@ -673,13 +682,6 @@ function calcularFinal() {
         totalGastos += amount;
         listaHTML += `<li class="flex justify-between items-center text-gray-600"><span>${label}</span><span class="font-medium text-gray-900">${formatNumber(amount)} \u{20AC}</span></li>`;
     };
-    if (!rowAJD.classList.contains('hidden')) addLine("Impuesto AJD (1.5%)", cleanNumber(inputAJD.value));
-    addLine("Notar\xeda", cleanNumber(inputsGastos.notaria.el.value));
-    addLine("Registro de la Propiedad", cleanNumber(inputsGastos.registro.el.value));
-    addLine("Gestor\xeda", cleanNumber(inputsGastos.gestoria.el.value));
-    addLine("Tasaci\xf3n", cleanNumber(inputsGastos.tasacion.el.value));
-    document.getElementById('listaGastos').innerHTML = listaHTML;
-    document.getElementById('finalGastos').innerText = formatMoney(totalGastos);
     let tasa = 0.10;
     let nombre = "ITP 10%";
     let bonif = 'ninguna';
@@ -691,6 +693,14 @@ function calcularFinal() {
         tasa = 0.05;
         nombre = "ITP Reducido 5%";
     }
+    if (!rowAJD.classList.contains('hidden')) addLine("Impuesto AJD (1.5%)", cleanNumber(inputAJD.value));
+    addLine("Notar\xeda", cleanNumber(inputsGastos.notaria.el.value));
+    addLine("Registro de la Propiedad", cleanNumber(inputsGastos.registro.el.value));
+    addLine("Gestor\xeda", cleanNumber(inputsGastos.gestoria.el.value));
+    addLine("Tasaci\xf3n", cleanNumber(inputsGastos.tasacion.el.value));
+    document.getElementById('listaGastos').innerHTML = listaHTML;
+    // CORREGIDO: Uso explícito de formatMoney para asegurar el separador de miles en el subtotal
+    document.getElementById('finalGastos').innerText = formatMoney(totalGastos);
     const imp = precio * tasa;
     document.getElementById('finalTipoImpuesto').innerText = nombre;
     document.getElementById('finalImpuestos').innerText = formatMoney(imp);
