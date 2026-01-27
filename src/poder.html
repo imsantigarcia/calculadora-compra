@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Poder de Compra - Hompers</title>
+    <title>Calculadora Poder de Compra - Hompers V14</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,333 +12,309 @@
                 extend: {
                     colors: {
                         hompers: {
-                            lime: '#dbf5aa', dark: '#003b4d', dark2: '#043b4d',
-                            gradStart: '#033d4e', gradEnd: '#4e786f', gray: '#94A3B8'
+                            lime: '#dbf5aa',      
+                            dark: '#003b4d',      
+                            dark2: '#043b4d',     
+                            gradStart: '#033d4e', 
+                            gradEnd: '#4e786f',
+                            gray: '#94A3B8'
                         }
                     },
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    boxShadow: { 'input': '0 1px 2px 0 rgba(0, 0, 0, 0.05)' },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
-                    },
-                    keyframes: {
-                        fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                        shake: {
-                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
-                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
-                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
-                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
-                        }
-                    }
+                    boxShadow: { 'card': '0 10px 30px -5px rgba(0, 0, 0, 0.05)' },
+                    animation: { 'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards' }
                 }
             }
         }
     </script>
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-        
-        /* Sliders */
-        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 0; }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: #E2E8F0; border-radius: 99px; }
-        input[type=range]::-moz-range-track { width: 100%; height: 4px; cursor: pointer; background: #E2E8F0; border-radius: 99px; }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%;
-            background: #003b4d; border: 3px solid white; cursor: pointer; margin-top: -8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15); transition: transform 0.15s ease;
+
+        .input-label {
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #64748B;
+            letter-spacing: 0.025em; margin-bottom: 0.5rem; display: block;
         }
+
+        .input-field {
+            width: 100%; padding: 0.75rem 0; font-size: 1.5rem; font-weight: 800;
+            color: #003b4d; background-color: transparent; border-bottom: 2px solid #E2E8F0;
+            outline: none; transition: all 0.2s;
+        }
+        .input-field:focus { border-color: #003b4d; }
         
-        input:focus { outline: none; border-color: #003b4d; }
-        .hompers-check { width: 1.25rem; height: 1.25rem; border-radius: 0.25rem; border: 2px solid #CBD5E1; accent-color: #003b4d; cursor: pointer; }
+        .hompers-check {
+            width: 1.25rem; height: 1.25rem; border-radius: 0.25rem;
+            border: 2px solid #CBD5E1; accent-color: #003b4d; cursor: pointer;
+        }
+
         .loader { border: 3px solid rgba(255,255,255,0.2); border-top: 3px solid #dbf5aa; border-radius: 50%; width: 24px; height: 24px; animation: spin 0.8s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .input-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #64748B; letter-spacing: 0.025em; margin-bottom: 0.5rem; display: block; }
-        .input-box { display: block; width: 100%; padding: 0.875rem 1rem; font-size: 1.125rem; font-weight: 700; color: #1E293B; background-color: #fff; border: 1px solid #CBD5E1; border-radius: 0.5rem; transition: all 0.2s; }
-        .input-box:focus { ring: 2px; ring-color: #003b4d; border-color: #003b4d; }
-        .input-error { border-color: #EF4444 !important; background-color: #FEF2F2 !important; }
-        .text-error { color: #EF4444 !important; }
     </style>
 </head>
 <body class="bg-[#F8FAFC] min-h-screen flex items-center justify-center p-4 sm:p-8">
 
-    <div class="bg-white w-full max-w-3xl rounded-3xl shadow-card overflow-hidden border border-gray-100 relative">
+    <div class="bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden border border-gray-100 relative">
         
         <div class="bg-gradient-to-r from-hompers-gradStart to-hompers-gradEnd px-8 py-12 text-white">
-            <p class="text-hompers-lime font-bold uppercase tracking-wider text-xs mb-3">Calculadora de Potencial</p>
-            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">¿Qué casa te puedes permitir?</h1>
-            <p class="text-white/90 font-medium text-lg">Descubre tu presupuesto real según tus ingresos y ahorros</p>
+            <p class="text-hompers-lime font-bold uppercase tracking-wider text-xs mb-3">Simulador gratuito online</p>
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Calcula qué casa puedes comprar</h1>
+            <p class="text-white/90 font-medium text-lg">Analizamos tu viabilidad para encontrar tu casa ideal</p>
         </div>
 
-        <div class="p-8 sm:p-10 space-y-10">
+        <div class="p-8 sm:p-10 space-y-12">
 
-            <section class="space-y-8">
-                <div class="flex items-center gap-3 mb-2">
+            <section class="space-y-8 text-left">
+                <div class="flex items-center gap-3">
                     <span class="bg-blue-50 text-hompers-dark font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm border border-blue-100">1</span>
-                    <h3 class="font-bold text-gray-900 text-lg">Tu situación financiera</h3>
+                    <h3 class="font-bold text-gray-900 text-lg">Tus números mensuales</h3>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-8">
-                    
-                    <div>
-                        <label class="input-label">Ingresos mensuales netos (Hogar)</label>
-                        <div class="relative group">
-                            <input type="text" inputmode="numeric" id="ingresosMes" value="3.000" class="input-box pr-10">
-                            <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 font-bold text-xl pointer-events-none group-focus-within:text-hompers-dark">€</span>
+                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-10">
+                    <div class="flex flex-col md:flex-row gap-10">
+                        <div class="flex-1">
+                            <label class="input-label">Ingresos netos mensuales (Hogar)</label>
+                            <input type="text" id="dispI" value="2.500 €" class="input-field">
                         </div>
-                        <p class="text-xs text-gray-400 mt-2">Suma de las nóminas de todos los compradores.</p>
+                        <div class="flex-1">
+                            <label class="input-label">Otros préstamos o deudas mensuales</label>
+                            <input type="text" id="dispD" value="0 €" class="input-field !text-red-500">
+                        </div>
                     </div>
 
                     <hr class="border-gray-100">
 
                     <div>
-                        <label class="input-label">Préstamos mensuales actuales</label>
-                        <div class="relative group">
-                            <input type="text" inputmode="numeric" id="deudasMes" value="0" class="input-box pr-10">
-                            <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 font-bold text-xl pointer-events-none group-focus-within:text-hompers-dark">€</span>
+                        <label class="input-label mb-3">¿Qué tipo de inmueble estás pensando comprar?</label>
+                        <div class="grid grid-cols-1 gap-3">
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="tipo" value="segunda" class="peer sr-only" checked>
+                                <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3 text-left">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center">
+                                        <div class="w-2 h-2 bg-white rounded-full"></div>
+                                    </div>
+                                    <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">Segunda mano</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="tipo" value="nueva" class="peer sr-only">
+                                <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3 text-left">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center">
+                                        <div class="w-2 h-2 bg-white rounded-full"></div>
+                                    </div>
+                                    <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">Obra nueva</span>
+                                </div>
+                            </label>
                         </div>
-                        <p class="text-xs text-gray-400 mt-2">Coche, préstamos personales, tarjetas... (No pongas alquiler actual).</p>
                     </div>
-
-                    <hr class="border-gray-100">
-
-                    <div>
-                        <label class="input-label">Ahorro disponible para la compra</label>
-                        <div class="relative group">
-                            <input type="text" inputmode="numeric" id="ahorrosTotal" value="40.000" class="input-box pr-10">
-                            <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 font-bold text-xl pointer-events-none group-focus-within:text-hompers-dark">€</span>
-                        </div>
-                        <div class="mt-4">
-                            <label class="input-label mb-2">Edad del mayor solicitante</label>
-                            <input type="range" id="sliderEdad" min="18" max="70" value="35" class="w-full">
-                            <div class="text-right text-sm font-bold text-hompers-dark mt-1"><span id="valEdad">35</span> años</div>
-                        </div>
-                    </div>
-
                 </div>
             </section>
 
-            <section class="border-t border-gray-100 pt-8">
-                <div class="flex items-center gap-3 mb-6">
+            <section class="space-y-8 text-left">
+                <div class="flex items-center gap-3">
                     <span class="bg-blue-50 text-hompers-dark font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm border border-blue-100">2</span>
-                    <h3 class="font-bold text-gray-900 text-lg">¿Dónde enviamos el estudio?</h3>
+                    <h3 class="font-bold text-gray-900 text-lg">Financiación y Situación</h3>
                 </div>
-                
-                <div class="space-y-5">
-                    <input type="text" id="leadName" placeholder="Nombre" class="input-box text-base font-normal">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <input type="email" id="leadEmail" placeholder="Correo electrónico" class="input-box text-base font-normal">
-                        <input type="tel" id="leadPhone" placeholder="Teléfono de contacto" class="input-box text-base font-normal">
-                    </div>
-                    
-                    <div class="space-y-3 pt-2">
-                        <label class="flex items-start gap-3 cursor-pointer group select-none">
-                            <input type="checkbox" id="checkPrivacy" class="hompers-check mt-0.5">
-                            <span id="labelPrivacy" class="text-sm text-gray-600 group-hover:text-gray-900">He leído y acepto la política de privacidad.</span>
-                        </label>
+
+                <div class="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-10">
+                    <div>
+                        <label class="input-label mb-3">¿Cuánto dinero necesitas que te preste el banco?</label>
+                        <div class="grid grid-cols-1 gap-3">
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="ltv" value="0.80" class="peer sr-only" checked>
+                                <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3 text-left">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+                                    <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">El 80%: tengo ahorrado el 20% de la entrada</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="ltv" value="0.90" class="peer sr-only">
+                                <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3 text-left">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+                                    <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">El 90%: tengo ahorrado poco dinero para la entrada</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="ltv" value="1.00" class="peer sr-only">
+                                <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3 text-left">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+                                    <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">El 100%: no quiero o no puedo aportar dinero de entrada</span>
+                                </div>
+                            </label>
+                        </div>
                     </div>
 
-                    <button onclick="revealResults()" id="btnAction" class="w-full bg-hompers-dark hover:bg-hompers-dark2 text-hompers-lime font-bold py-5 rounded-xl shadow-lg hover:shadow-xl transition-all active:scale-[0.98] text-lg flex items-center justify-center gap-3 mt-4">
-                        <span id="btnText">Calcular mi potencial de compra</span>
-                        <div id="btnLoader" class="loader hidden"></div>
-                    </button>
+                    <hr class="border-gray-100">
+
+                    <div id="boxSit">
+                        <label class="input-label mb-3">¿Qué opción describe mejor tu situación?</label>
+                        <div class="grid grid-cols-1 gap-3">
+                            <label class="cursor-pointer group text-left">
+                                <input type="radio" name="sit" value="0.10" class="peer sr-only" checked>
+                                <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+                                    <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">No tengo bonificaciones fiscales</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group text-left">
+                                <input type="radio" name="sit" value="0.05" class="peer sr-only">
+                                <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+                                    <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">Soy o somos menores de 35 años</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group text-left">
+                                <input type="radio" name="sit" value="0.05" class="peer sr-only">
+                                <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+                                    <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">Somos familia numerosa</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group text-left">
+                                <input type="radio" name="sit" value="0.05" class="peer sr-only">
+                                <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3">
+                                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
+                                    <span class="text-sm font-bold text-gray-700 peer-checked:text-hompers-dark">Tengo un grado de discapacidad</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <div id="resultSection" class="hidden bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-2xl relative mt-8">
-                <div class="h-2 bg-gradient-to-r from-hompers-gradStart to-hompers-gradEnd w-full"></div>
+            <section class="border-t border-gray-100 pt-12 space-y-6 text-left">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="bg-blue-50 text-hompers-dark font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm border border-blue-100">3</span>
+                    <h3 class="font-bold text-gray-900 text-lg">Tu estudio detallado</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="lName" placeholder="Tu nombre" class="w-full p-4 border border-gray-300 rounded-2xl font-bold outline-none focus:border-hompers-dark transition-all">
+                    <input type="email" id="lEmail" placeholder="Tu mejor email" class="w-full p-4 border border-gray-300 rounded-2xl font-bold outline-none focus:border-hompers-dark transition-all">
+                </div>
                 
-                <div class="p-8">
-                    <div class="text-center mb-10">
-                        <p class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-2">Precio máximo recomendado</p>
-                        <p id="finalPrice" class="text-5xl font-extrabold text-hompers-dark tracking-tight">0 €</p>
-                        <p class="text-sm text-gray-500 mt-2">Para una compra segura y viable.</p>
+                <div class="space-y-3 pt-2">
+                    <label class="flex items-start gap-3 cursor-pointer group select-none">
+                        <input type="checkbox" id="lHelp" class="hompers-check mt-0.5"> 
+                        <span class="text-sm text-gray-600 group-hover:text-gray-900">Quiero ayuda para conseguir <strong>mejores condiciones</strong> (hipoteca o negociación)</span>
+                    </label>
+                    <label class="flex items-start gap-3 cursor-pointer group select-none">
+                        <input type="checkbox" id="lPrivacy" class="hompers-check mt-0.5">
+                        <span class="text-sm text-gray-600 group-hover:text-gray-900 italic">He leído y acepto la política de privacidad*</span>
+                    </label>
+                </div>
+
+                <button onclick="ejecutarAnalisis()" class="w-full bg-hompers-dark text-hompers-lime font-black py-6 rounded-2xl text-xl shadow-2xl flex items-center justify-center gap-4 active:scale-95 transition-all">
+                    <span id="txtB">Analizar mi Poder de Compra</span>
+                    <div id="ldB" class="loader hidden"></div>
+                </button>
+            </section>
+
+            <div id="res" class="hidden animate-fade-in-up space-y-6 mt-12">
+                
+                <div class="bg-white p-10 rounded-[2.5rem] text-center border-2 border-hompers-lime/50 shadow-sm">
+                    <p class="text-gray-400 font-bold uppercase text-[10px] tracking-widest mb-3">Presupuesto máximo de compra</p>
+                    <h2 id="rP" class="text-5xl font-black text-hompers-dark tracking-tighter mb-2">0 €</h2>
+                    <p class="text-[10px] text-gray-400 uppercase font-bold">Límite basado en solvencia mensual</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm text-left leading-relaxed">
+                    <p id="textoExplicativo" class="text-gray-700">
+                        </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-blue-50/50 p-6 rounded-3xl border border-blue-100 text-center">
+                        <p class="text-[9px] font-bold text-blue-400 uppercase tracking-widest mb-1">Cuota hipoteca (Máx 35%)</p>
+                        <p id="rC" class="text-2xl font-bold text-hompers-dark">0 €</p>
                     </div>
-
-                    <div class="bg-blue-50/80 rounded-xl p-6 mb-8 border border-blue-100">
-                        <h4 class="text-sm font-bold text-hompers-dark uppercase mb-4 flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                            Análisis de viabilidad
-                        </h4>
-                        
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex justify-between text-xs mb-1">
-                                    <span class="font-medium text-gray-600">Límite por tu Sueldo (Endeudamiento)</span>
-                                    <span id="limitIncomeVal" class="font-bold text-gray-900">0 €</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                    <div id="barIncome" class="bg-blue-400 h-2.5 rounded-full" style="width: 0%"></div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="flex justify-between text-xs mb-1">
-                                    <span class="font-medium text-gray-600">Límite por tus Ahorros (Entrada + Gastos)</span>
-                                    <span id="limitSavingsVal" class="font-bold text-gray-900">0 €</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                    <div id="barSavings" class="bg-green-500 h-2.5 rounded-full" style="width: 0%"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="diagnosticBox" class="mt-6 p-4 bg-white rounded-lg border border-blue-200 shadow-sm">
-                            <p id="diagnosticText" class="text-sm text-gray-700 leading-relaxed"></p>
-                        </div>
+                    <div class="bg-green-50/50 p-6 rounded-3xl border border-green-100 text-center">
+                        <p class="text-[9px] font-bold text-green-400 uppercase tracking-widest mb-1">Total Ahorros Necesarios</p>
+                        <p id="rTotalAhorro" class="text-2xl font-bold text-hompers-dark">0 €</p>
                     </div>
+                </div>
 
-                    <div class="text-center">
-                        <p class="text-xs text-gray-400">Cálculo basado en hipoteca a tipo fijo 3.5% y ratio de endeudamiento del 35%.</p>
-                    </div>
+                <div class="text-center px-4">
+                    <p class="text-[11px] text-gray-400 italic">David y Rodolfo ya están analizando estos datos para validar tu caso. Te contactaremos pronto desde quetal@hompers.com.</p>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
     <script>
-        // Utilidades
-        const formatMoney = (n) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
-        const formatNumber = (n) => new Intl.NumberFormat('es-ES').format(n);
-        const cleanNumber = (str) => parseFloat(str.toString().replace(/\./g, '').replace(' €','')) || 0;
+        const formatM = (n) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+        const formatN = (n) => new Intl.NumberFormat('es-ES').format(n);
+        const cln = (str) => parseFloat(str.toString().replace(/\D/g, '')) || 0;
 
-        // Elementos
-        const elIngresos = document.getElementById('ingresosMes');
-        const elDeudas = document.getElementById('deudasMes');
-        const elAhorros = document.getElementById('ahorrosTotal');
-        const elEdad = document.getElementById('sliderEdad');
-        const elValEdad = document.getElementById('valEdad');
-
-        // Listeners de formato
-        [elIngresos, elDeudas, elAhorros].forEach(el => {
+        const fields = [document.getElementById('dispI'), document.getElementById('dispD')];
+        fields.forEach(el => {
             el.addEventListener('input', (e) => {
-                let raw = e.target.value.replace(/\D/g, '');
-                e.target.value = formatNumber(raw);
+                let val = e.target.value.replace(/\D/g, '');
+                if(val) e.target.value = formatN(val) + " €";
             });
         });
 
-        elEdad.addEventListener('input', (e) => {
-            elValEdad.innerText = e.target.value;
+        document.getElementsByName('tipo').forEach(r => {
+            r.onclick = () => {
+                const isNew = r.value === 'nueva';
+                document.getElementById('boxSit').style.opacity = isNew ? '0.3' : '1';
+                document.getElementById('boxSit').style.pointerEvents = isNew ? 'none' : 'auto';
+            };
         });
 
-        // VALIDACIÓN Y CÁLCULO
-        function revealResults() {
-            const btn = document.getElementById('btnAction');
-            const txt = document.getElementById('btnText');
-            const loader = document.getElementById('btnLoader');
-            const results = document.getElementById('resultSection');
+        function ejecutarAnalisis() {
+            if(!document.getElementById('lPrivacy').checked) { alert("Acepta la privacidad"); return; }
+            if(!document.getElementById('lEmail').value) { alert("Dinos tu email"); return; }
 
-            // Validar Contacto
-            const nameInput = document.getElementById('leadName');
-            const emailInput = document.getElementById('leadEmail');
-            const phoneInput = document.getElementById('leadPhone');
-            const privacyCheck = document.getElementById('checkPrivacy');
-            const privacyLabel = document.getElementById('labelPrivacy');
-
-            let isValid = true;
-            const requiredFields = [nameInput, emailInput, phoneInput];
-
-            requiredFields.forEach(field => field.classList.remove('input-error'));
-            privacyLabel.classList.remove('text-error');
-
-            requiredFields.forEach(field => {
-                if(!field.value.trim()) { field.classList.add('input-error'); isValid = false; }
-            });
-
-            if(!privacyCheck.checked) { privacyLabel.classList.add('text-error'); isValid = false; }
-
-            if(!isValid) {
-                btn.classList.add('animate-shake');
-                setTimeout(() => btn.classList.remove('animate-shake'), 500);
-                return;
-            }
-
-            // Animación
-            txt.innerText = "Analizando viabilidad...";
-            loader.classList.remove('hidden');
-            btn.disabled = true;
+            document.getElementById('ldB').classList.remove('hidden');
+            document.getElementById('txtB').innerText = "Validando solvencia...";
 
             setTimeout(() => {
-                calcularPotencial();
+                const ingresos = cln(document.getElementById('dispI').value);
+                const deudas = cln(document.getElementById('dispD').value);
+                const ltv = parseFloat(document.querySelector('input[name="ltv"]:checked').value);
+                const tipo = document.querySelector('input[name="tipo"]:checked').value;
+                const situacion = parseFloat(document.querySelector('input[name="sit"]:checked').value);
                 
-                txt.innerText = "Recalcular";
-                loader.classList.add('hidden');
-                btn.disabled = false;
-                results.classList.remove('hidden');
-                results.classList.add('animate-fade-in-up');
-                results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // 1. FINANZAS (30 años / 3.5%)
+                const cuotaM = (ingresos - deudas) * 0.35;
+                const factorH = 0.00449; 
+                const precioMax = (cuotaM / factorH) / ltv;
+                const importeHipoteca = precioMax * ltv;
+
+                // 2. GASTOS MATCHING INDEX.HTML
+                // Notaría 850 + Registro 450 + Gestoría 350 + Tasación 300 = 1950 €
+                const fijos = 1950;
+                let tasaImp = (tipo === 'nueva') ? 0.10 : situacion;
+                let variables = precioMax * tasaImp;
+                
+                if (tipo === 'nueva') {
+                    variables += (precioMax * 0.015); // AJD 1.5%
+                }
+
+                const entrada = precioMax * (1 - ltv);
+                const totalGastosCompraventa = variables + fijos;
+                const ahorroTotal = entrada + totalGastosCompraventa;
+
+                // 3. PINTAR
+                document.getElementById('rP').innerText = formatM(precioMax);
+                document.getElementById('rC').innerText = formatM(cuotaM);
+                document.getElementById('rTotalAhorro').innerText = formatM(ahorroTotal);
+
+                document.getElementById('textoExplicativo').innerHTML = `
+                    Considerando tus ingresos mensuales de <strong>${formatN(ingresos)} €</strong>, y tus otros préstamos por valor de <strong>${formatN(deudas)} €</strong>, podrías comprar una vivienda de hasta <strong>${formatN(Math.round(precioMax))} €</strong>.
+                    <br><br>
+                    Para ello, necesitarías aportar unos ahorros dedicados al pago de la entrada de <strong>${formatN(Math.round(entrada))} €</strong> y contar con aproximadamente <strong>${formatN(Math.round(totalGastosCompraventa))} €</strong> para cubrir los gastos e impuestos de compraventa.
+                    <br><br>
+                    Basándonos en tus ingresos, la cuota mensual máxima permitida sería de <strong>${formatN(Math.round(cuotaM))} €/mes</strong> para un importe máximo de hipoteca de <strong>${formatN(Math.round(importeHipoteca))} €</strong> (calculado a 30 años).
+                `;
+
+                document.getElementById('res').classList.remove('hidden');
+                document.getElementById('ldB').classList.add('hidden');
+                document.getElementById('txtB').innerText = "Recalcular mi estudio";
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             }, 1000);
-        }
-
-        function calcularPotencial() {
-            const ingresos = cleanNumber(elIngresos.value);
-            const deudas = cleanNumber(elDeudas.value);
-            const ahorros = cleanNumber(elAhorros.value);
-            const edad = parseInt(elEdad.value);
-
-            // 1. CÁLCULO POR ENDEUDAMIENTO (SUELDO)
-            // Máximo 35% de los ingresos netos disponibles
-            const capacidadMensual = (ingresos - deudas) * 0.35;
-            
-            // Fórmula Hipoteca: Calcular Capital (P) dado una cuota (M)
-            // P = M * [ (1 - (1+r)^-n) / r ]
-            // Asumimos interés 3.5% (0.035 anual)
-            const interesAnual = 0.035;
-            const r = interesAnual / 12;
-            
-            // Plazo: Hasta los 75 años, máximo 30 años
-            let anosHipoteca = 75 - edad;
-            if(anosHipoteca > 30) anosHipoteca = 30;
-            if(anosHipoteca < 10) anosHipoteca = 10; // Mínimo lógico
-            
-            const n = anosHipoteca * 12;
-
-            // Capital máximo que el banco presta
-            const maxPrestamo = capacidadMensual * ( (1 - Math.pow(1+r, -n)) / r );
-            
-            // Precio máximo vivienda según banco (suponiendo que financian el 80%)
-            const maxPrecioPorSueldo = maxPrestamo / 0.80;
-
-
-            // 2. CÁLCULO POR AHORRO (ENTRADA)
-            // Se necesita el 30% del precio (20% entrada + 10% gastos)
-            // Precio * 0.30 = Ahorros  ->  Precio = Ahorros / 0.30
-            const maxPrecioPorAhorro = ahorros / 0.30;
-
-
-            // 3. RESULTADO FINAL (El menor de los dos límites)
-            const precioFinal = Math.min(maxPrecioPorSueldo, maxPrecioPorAhorro);
-
-            // Renderizado
-            document.getElementById('finalPrice').innerText = formatMoney(precioFinal);
-            document.getElementById('limitIncomeVal').innerText = formatMoney(maxPrecioPorSueldo);
-            document.getElementById('limitSavingsVal').innerText = formatMoney(maxPrecioPorAhorro);
-
-            // Barras visuales (Escaladas relativas al mayor valor para que se vea la proporción)
-            const baseScale = Math.max(maxPrecioPorSueldo, maxPrecioPorAhorro) * 1.1; // 10% margen
-            document.getElementById('barIncome').style.width = (maxPrecioPorSueldo / baseScale * 100) + '%';
-            document.getElementById('barSavings').style.width = (maxPrecioPorAhorro / baseScale * 100) + '%';
-
-            // 4. DIAGNÓSTICO INTELIGENTE (Copywriting Ventas)
-            const box = document.getElementById('diagnosticBox');
-            const text = document.getElementById('diagnosticText');
-            
-            // Lógica del mensaje
-            if (ingresos < 1500 && ahorros < 20000) {
-                // Caso: No viable
-                text.innerHTML = `⚠️ <strong>La operación es complicada ahora mismo.</strong> Tanto los ingresos como los ahorros limitan las opciones de compra. Te recomendamos ahorrar un poco más antes de dar el paso.`;
-                box.className = "mt-6 p-4 bg-red-50 rounded-lg border border-red-200 shadow-sm";
-            } else if (maxPrecioPorAhorro < maxPrecioPorSueldo) {
-                // Caso: Limitado por Ahorro (Tiene buen sueldo) -> OPORTUNIDAD 100% FINANCIACIÓN
-                text.innerHTML = `💡 <strong>Tienes muy buen perfil financiero</strong>, pero tus ahorros actuales limitan el precio de compra. <br><br>Con tu sueldo, podrías aspirar a una casa de <strong>${formatNumber(maxPrecioPorSueldo.toFixed(0))} €</strong>. En Hompers podemos ayudarte a conseguir una <strong>hipoteca al 90% o 100%</strong> para aprovechar tu capacidad de pago.`;
-                box.className = "mt-6 p-4 bg-green-50 rounded-lg border border-green-200 shadow-sm";
-            } else {
-                // Caso: Limitado por Sueldo (Tiene mucho ahorro) -> OPORTUNIDAD NEGOCIACIÓN / DUO
-                text.innerHTML = `💰 <strong>Tienes una entrada fantástica</strong>, pero el banco limita el importe por tu cuota mensual segura. <br><br>Si quieres comprar algo por encima de este precio, la clave está en <strong>negociar fuerte el precio de la vivienda</strong> o buscar mejores condiciones de tipo de interés.`;
-                box.className = "mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200 shadow-sm";
-            }
         }
     </script>
 </body>
