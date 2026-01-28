@@ -1,67 +1,136 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<!DOCTYPE html><html lang="es"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Poder de Compra - Hompers V20</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        hompers: {
-                            lime: '#dbf5aa',      
-                            dark: '#003b4d',      
-                            dark2: '#043b4d',     
-                            gradStart: '#033d4e', 
-                            gradEnd: '#4e786f',
-                            gray: '#94A3B8'
-                        }
+    <script>tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                hompers: {
+                    lime: '#dbf5aa',
+                    dark: '#003b4d',
+                    dark2: '#043b4d',
+                    gradStart: '#033d4e',
+                    gradEnd: '#4e786f',
+                    gray: '#94A3B8'
+                }
+            },
+            fontFamily: {
+                sans: [
+                    'Inter',
+                    'sans-serif'
+                ]
+            },
+            boxShadow: {
+                'card': '0 10px 30px -5px rgba(0, 0, 0, 0.05)'
+            },
+            animation: {
+                'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both'
+            },
+            keyframes: {
+                fadeInUp: {
+                    '0%': {
+                        opacity: '0',
+                        transform: 'translateY(20px)'
                     },
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    boxShadow: { 'card': '0 10px 30px -5px rgba(0, 0, 0, 0.05)' },
-                    animation: { 
-                        'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both'
+                    '100%': {
+                        opacity: '1',
+                        transform: 'translateY(0)'
+                    }
+                },
+                shake: {
+                    '10%, 90%': {
+                        transform: 'translate3d(-1px, 0, 0)'
                     },
-                    keyframes: {
-                        fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                        shake: { '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' }, '20%, 80%': { transform: 'translate3d(2px, 0, 0)' }, '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' }, '40%, 60%': { transform: 'translate3d(4px, 0, 0)' } }
+                    '20%, 80%': {
+                        transform: 'translate3d(2px, 0, 0)'
+                    },
+                    '30%, 50%, 70%': {
+                        transform: 'translate3d(-4px, 0, 0)'
+                    },
+                    '40%, 60%': {
+                        transform: 'translate3d(4px, 0, 0)'
                     }
                 }
             }
         }
-    </script>
+    }
+};
+
+</script>
     
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
-        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    <style>@import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap";
+body {
+  -webkit-font-smoothing: antialiased;
+  font-family: Inter, sans-serif;
+}
 
-        .input-label {
-            font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #64748B;
-            letter-spacing: 0.025em; margin-bottom: 0.5rem; display: block;
-        }
+.input-label {
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: .025em;
+  margin-bottom: .5rem;
+  font-size: .75rem;
+  font-weight: 700;
+  display: block;
+}
 
-        .input-field {
-            width: 100%; padding: 0.75rem 0; font-size: 1.5rem; font-weight: 800;
-            color: #003b4d; background-color: transparent; border-bottom: 2px solid #E2E8F0;
-            outline: none; transition: all 0.2s;
-        }
-        .input-field:focus { border-color: #003b4d; }
-        
-        .input-error { border-color: #EF4444 !important; border-width: 2px; }
-        .text-error { color: #EF4444 !important; }
+.input-field {
+  color: #003b4d;
+  background-color: #0000;
+  border-bottom: 2px solid #e2e8f0;
+  outline: none;
+  width: 100%;
+  padding: .75rem 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  transition: all .2s;
+}
 
-        .hompers-check {
-            width: 1.25rem; height: 1.25rem; border-radius: 0.25rem;
-            border: 2px solid #CBD5E1; accent-color: #003b4d; cursor: pointer;
-        }
+.input-field:focus {
+  border-color: #003b4d;
+}
 
-        .loader { border: 3px solid rgba(255,255,255,0.2); border-top: 3px solid #dbf5aa; border-radius: 50%; width: 24px; height: 24px; animation: spin 0.8s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
+.input-error {
+  border-width: 2px;
+  border-color: #ef4444 !important;
+}
+
+.text-error {
+  color: #ef4444 !important;
+}
+
+.hompers-check {
+  accent-color: #003b4d;
+  cursor: pointer;
+  border: 2px solid #cbd5e1;
+  border-radius: .25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.loader {
+  border: 3px solid #fff3;
+  border-top-color: #dbf5aa;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: .8s linear infinite spin;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
 </head>
 <body class="bg-[#F8FAFC] min-h-screen flex items-center justify-center p-4 sm:p-8">
 
@@ -105,7 +174,7 @@
                         <label class="input-label mb-3 text-left">¿Qué tipo de inmueble quieres comprar?</label>
                         <div class="grid grid-cols-1 gap-3">
                             <label class="cursor-pointer group text-left">
-                                <input type="radio" name="tipo" value="segunda" class="peer sr-only" checked>
+                                <input type="radio" name="tipo" value="segunda" class="peer sr-only" checked="">
                                 <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 peer-checked:text-hompers-dark transition-all flex items-center gap-3">
                                     <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
                                     <span class="text-sm font-bold text-gray-700">Segunda mano</span>
@@ -134,7 +203,7 @@
                         <label class="input-label mb-3 text-left">¿Cuánto dinero necesitas que te preste el banco?</label>
                         <div class="grid grid-cols-1 gap-3">
                             <label class="cursor-pointer group text-left">
-                                <input type="radio" name="ltv" value="0.80" class="peer sr-only" checked>
+                                <input type="radio" name="ltv" value="0.80" class="peer sr-only" checked="">
                                 <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 flex items-center gap-3">
                                     <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
                                     <span class="text-sm font-bold text-gray-700">El 80%: tengo ahorrado el 20% de la entrada</span>
@@ -163,7 +232,7 @@
                         <label class="input-label mb-3 text-left">¿En qué punto del proceso de compra estás?</label>
                         <div class="grid grid-cols-1 gap-3">
                             <label class="cursor-pointer group text-left">
-                                <input type="radio" name="search" value="mirando" class="peer sr-only" checked>
+                                <input type="radio" name="search" value="mirando" class="peer sr-only" checked="">
                                 <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 flex items-center gap-3">
                                     <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
                                     <span class="text-sm font-bold text-gray-700">Estoy empezando justo ahora</span>
@@ -192,7 +261,7 @@
                         <label class="input-label mb-3 text-left">¿Qué opción describe mejor tu situación?</label>
                         <div class="grid grid-cols-1 gap-3">
                             <label class="cursor-pointer group text-left">
-                                <input type="radio" name="sit" value="0.10" class="peer sr-only" checked>
+                                <input type="radio" name="sit" value="0.10" class="peer sr-only" checked="">
                                 <div class="w-full p-4 rounded-xl border border-gray-200 hover:border-hompers-dark/50 peer-checked:border-hompers-dark peer-checked:bg-[#003b4d]/5 flex items-center gap-3">
                                     <div class="w-5 h-5 rounded-full border-2 border-gray-300 peer-checked:border-hompers-dark peer-checked:bg-hompers-dark shrink-0 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>
                                     <span class="text-sm font-bold text-gray-700">No tengo bonificaciones fiscales</span>
@@ -290,107 +359,111 @@
         </div>
     </div>
 
-    <script>
-        const formatM = (n) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
-        const formatN = (n) => new Intl.NumberFormat('es-ES').format(n);
-        const cln = (str) => parseFloat(str.toString().replace(/\D/g, '')) || 0;
-
-        const inputsF = [document.getElementById('dispI'), document.getElementById('dispD'), document.getElementById('dispA')];
-        inputsF.forEach(el => {
-            el.addEventListener('input', (e) => {
-                let val = e.target.value.replace(/\D/g, '');
-                if(val) e.target.value = formatN(val) + " €";
-            });
-        });
-
-        document.getElementsByName('tipo').forEach(r => {
-            r.onclick = () => {
-                const isNew = r.value === 'nueva';
-                document.getElementById('boxSit').style.opacity = isNew ? '0.3' : '1';
-                document.getElementById('boxSit').style.pointerEvents = isNew ? 'none' : 'auto';
-            };
-        });
-
-        function ejecutarAnalisis() {
-            const name = document.getElementById('lName');
-            const email = document.getElementById('lEmail');
-            const phone = document.getElementById('lPhone');
-            const privacy = document.getElementById('lPrivacy');
-            const btn = document.getElementById('btnMain');
-
-            let isValid = true;
-            [name, email, phone].forEach(inp => {
-                if(!inp.value.trim()) { inp.classList.add('input-error'); isValid = false; }
-                else { inp.classList.remove('input-error'); }
-            });
-            if(!privacy.checked) { document.getElementById('txtPrivacy').classList.add('text-error'); isValid = false; }
-            else { document.getElementById('txtPrivacy').classList.remove('text-error'); }
-
-            if(!isValid) { btn.classList.add('animate-shake'); setTimeout(() => btn.classList.remove('animate-shake'), 500); return; }
-
-            document.getElementById('ldB').classList.remove('hidden');
-            document.getElementById('txtB').innerText = "Validando solvencia...";
-
-            setTimeout(() => {
-                const ingresos = cln(document.getElementById('dispI').value);
-                const deudas = cln(document.getElementById('dispD').value);
-                const ahorros = cln(document.getElementById('dispA').value);
-                const ltv = parseFloat(document.querySelector('input[name="ltv"]:checked').value);
-                const tipo = document.querySelector('input[name="tipo"]:checked').value;
-                const situacion = parseFloat(document.querySelector('input[name="sit"]:checked').value);
-                
-                // 1. LÍMITE POR BANCO (Ratio 35%)
-                const cuotaM = (ingresos - deudas) * 0.35;
-                const factorH = 0.00449; // 3.5% a 30 años
-                const pMaxBanco = (cuotaM / factorH) / ltv;
-
-                // 2. LÍMITE POR AHORROS (Matching logic index.html)
-                const fijos = 1950;
-                let tasaImp = (tipo === 'nueva') ? 0.10 : situacion;
-                let factorVariables = tasaImp + (tipo === 'nueva' ? 0.015 : 0);
-                const pMaxAhorros = (ahorros - fijos) / ((1 - ltv) + factorVariables);
-
-                // 3. DETERMINACIÓN DEL LÍMITE REAL
-                const precioMax = Math.min(pMaxBanco, pMaxAhorros);
-                const esBanco = pMaxBanco < pMaxAhorros;
-
-                // 4. CÁLCULO DE DESGLOSE
-                const importeHipoteca = precioMax * ltv;
-                const entrada = precioMax * (1 - ltv);
-                const totalGastosCompraventa = (precioMax * factorVariables) + fijos;
-
-                // 5. RENDERIZADO
-                document.getElementById('rP').innerText = formatM(precioMax);
-                document.getElementById('rC').innerText = formatM(cuotaM);
-                document.getElementById('rEntrada').innerText = formatM(entrada);
-                
-                const labelLimit = document.getElementById('labelLimit');
-                labelLimit.innerText = esBanco ? "Límite basado en solvencia mensual" : "Límite basado en tus ahorros";
-
-                let explicacionFreno = "";
-                if (!esBanco) {
-                    // LIMITADO POR AHORROS
-                    explicacionFreno = `<br><br>💡 <strong>Nota:</strong> Tus ahorros actuales actúan como freno en tu compra. Aunque basándonos en tu capacidad de endeudamiento podrías optar a una vivienda de hasta <strong>${formatN(Math.round(pMaxBanco))} €</strong>, tus ahorros solo te permiten llegar a la cifra indicada para cubrir la entrada y los gastos.`;
-                } else if (pMaxAhorros > pMaxBanco * 1.1) {
-                    // LIMITADO POR BANCO (TIENE MUCHO AHORRO)
-                    explicacionFreno = `<br><br>💡 <strong>Nota:</strong> Dispones de un buen colchón de ahorros, pero tu presupuesto está limitado por tu capacidad de endeudamiento mensual –del 35% de tus ingresos netos mensuales–. Aunque tus ahorros te permitirían comprar una vivienda de hasta <strong>${formatN(Math.round(pMaxAhorros))} €</strong>, el banco no te permitiría una cuota superior a la indicada basándose en tus ingresos netos.`;
-                }
-
-                document.getElementById('textoExplicativo').innerHTML = `
-                    Considerando tus ingresos mensuales de <strong>${formatN(ingresos)} €</strong>, y tus otros préstamos por valor de <strong>${formatN(deudas)} €</strong>, podrías comprar una vivienda de hasta <strong>${formatN(Math.round(precioMax))} €</strong>.
+    <script>const formatM = (n)=>new Intl.NumberFormat('es-ES', {
+        style: 'currency',
+        currency: 'EUR',
+        maximumFractionDigits: 0
+    }).format(n);
+const formatN = (n)=>new Intl.NumberFormat('es-ES').format(n);
+const cln = (str)=>parseFloat(str.toString().replace(/\D/g, '')) || 0;
+const inputsF = [
+    document.getElementById('dispI'),
+    document.getElementById('dispD'),
+    document.getElementById('dispA')
+];
+inputsF.forEach((el)=>{
+    el.addEventListener('input', (e)=>{
+        let val = e.target.value.replace(/\D/g, '');
+        if (val) e.target.value = formatN(val) + " \u20AC";
+    });
+});
+document.getElementsByName('tipo').forEach((r)=>{
+    r.onclick = ()=>{
+        const isNew = r.value === 'nueva';
+        document.getElementById('boxSit').style.opacity = isNew ? '0.3' : '1';
+        document.getElementById('boxSit').style.pointerEvents = isNew ? 'none' : 'auto';
+    };
+});
+function ejecutarAnalisis() {
+    const name = document.getElementById('lName');
+    const email = document.getElementById('lEmail');
+    const phone = document.getElementById('lPhone');
+    const privacy = document.getElementById('lPrivacy');
+    const btn = document.getElementById('btnMain');
+    let isValid = true;
+    [
+        name,
+        email,
+        phone
+    ].forEach((inp)=>{
+        if (!inp.value.trim()) {
+            inp.classList.add('input-error');
+            isValid = false;
+        } else inp.classList.remove('input-error');
+    });
+    if (!privacy.checked) {
+        document.getElementById('txtPrivacy').classList.add('text-error');
+        isValid = false;
+    } else document.getElementById('txtPrivacy').classList.remove('text-error');
+    if (!isValid) {
+        btn.classList.add('animate-shake');
+        setTimeout(()=>btn.classList.remove('animate-shake'), 500);
+        return;
+    }
+    document.getElementById('ldB').classList.remove('hidden');
+    document.getElementById('txtB').innerText = "Validando solvencia...";
+    setTimeout(()=>{
+        const ingresos = cln(document.getElementById('dispI').value);
+        const deudas = cln(document.getElementById('dispD').value);
+        const ahorros = cln(document.getElementById('dispA').value);
+        const ltv = parseFloat(document.querySelector('input[name="ltv"]:checked').value);
+        const tipo = document.querySelector('input[name="tipo"]:checked').value;
+        const situacion = parseFloat(document.querySelector('input[name="sit"]:checked').value);
+        // 1. LÍMITE POR BANCO (Ratio 35%)
+        const cuotaM = (ingresos - deudas) * 0.35;
+        const factorH = 0.00449; // 3.5% a 30 años
+        const pMaxBanco = cuotaM / factorH / ltv;
+        // 2. LÍMITE POR AHORROS (Matching logic index.html)
+        const fijos = 1950;
+        let tasaImp = tipo === 'nueva' ? 0.10 : situacion;
+        let factorVariables = tasaImp + (tipo === 'nueva' ? 0.015 : 0);
+        const pMaxAhorros = (ahorros - fijos) / (1 - ltv + factorVariables);
+        // 3. DETERMINACIÓN DEL LÍMITE REAL
+        const precioMax = Math.min(pMaxBanco, pMaxAhorros);
+        const esBanco = pMaxBanco < pMaxAhorros;
+        // 4. CÁLCULO DE DESGLOSE
+        const importeHipoteca = precioMax * ltv;
+        const entrada = precioMax * (1 - ltv);
+        const totalGastosCompraventa = precioMax * factorVariables + fijos;
+        // 5. RENDERIZADO
+        document.getElementById('rP').innerText = formatM(precioMax);
+        document.getElementById('rC').innerText = formatM(cuotaM);
+        document.getElementById('rEntrada').innerText = formatM(entrada);
+        const labelLimit = document.getElementById('labelLimit');
+        labelLimit.innerText = esBanco ? "L\xedmite basado en solvencia mensual" : "L\xedmite basado en tus ahorros";
+        let explicacionFreno = "";
+        if (!esBanco) // LIMITADO POR AHORROS
+        explicacionFreno = `<br><br>\u{1F4A1} <strong>Nota:</strong> Tus ahorros actuales act\xfaan como freno en tu compra. Aunque bas\xe1ndonos en tu capacidad de endeudamiento podr\xedas optar a una vivienda de hasta <strong>${formatN(Math.round(pMaxBanco))} \u{20AC}</strong>, tus ahorros solo te permiten llegar a la cifra indicada para cubrir la entrada y los gastos.`;
+        else if (pMaxAhorros > pMaxBanco * 1.1) // LIMITADO POR BANCO (TIENE MUCHO AHORRO)
+        explicacionFreno = `<br><br>\u{1F4A1} <strong>Nota:</strong> Dispones de un buen colch\xf3n de ahorros, pero tu presupuesto est\xe1 limitado por tu capacidad de endeudamiento mensual \u{2013}del 35% de tus ingresos netos mensuales\u{2013}. Aunque tus ahorros te permitir\xedan comprar una vivienda de hasta <strong>${formatN(Math.round(pMaxAhorros))} \u{20AC}</strong>, el banco no te permitir\xeda una cuota superior a la indicada bas\xe1ndose en tus ingresos netos.`;
+        document.getElementById('textoExplicativo').innerHTML = `
+                    Considerando tus ingresos mensuales de <strong>${formatN(ingresos)} \u{20AC}</strong>, y tus otros pr\xe9stamos por valor de <strong>${formatN(deudas)} \u{20AC}</strong>, podr\xedas comprar una vivienda de hasta <strong>${formatN(Math.round(precioMax))} \u{20AC}</strong>.
                     <br><br>
-                    Para ello, necesitarías aportar unos ahorros dedicados al pago de la entrada de <strong>${formatN(Math.round(entrada))} €</strong> y contar con aproximadamente <strong>${formatN(Math.round(totalGastosCompraventa))} €</strong> para cubrir los gastos e impuestos de compraventa.
+                    Para ello, necesitar\xedas aportar unos ahorros dedicados al pago de la entrada de <strong>${formatN(Math.round(entrada))} \u{20AC}</strong> y contar con aproximadamente <strong>${formatN(Math.round(totalGastosCompraventa))} \u{20AC}</strong> para cubrir los gastos e impuestos de compraventa.
                     <br><br>
-                    Basándonos en tus ingresos, la cuota mensual máxima permitida sería de <strong>${formatN(Math.round(cuotaM))} €/mes</strong> para un importe máximo de hipoteca de <strong>${formatN(Math.round(importeHipoteca))} €</strong> (calculado a 30 años).
+                    Bas\xe1ndonos en tus ingresos, la cuota mensual m\xe1xima permitida ser\xeda de <strong>${formatN(Math.round(cuotaM))} \u{20AC}/mes</strong> para un importe m\xe1ximo de hipoteca de <strong>${formatN(Math.round(importeHipoteca))} \u{20AC}</strong> (calculado a 30 a\xf1os).
                     ${explicacionFreno}
                 `;
+        document.getElementById('res').classList.remove('hidden');
+        document.getElementById('ldB').classList.add('hidden');
+        document.getElementById('txtB').innerText = "Recalcular mi estudio";
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
+    }, 1000);
+}
 
-                document.getElementById('res').classList.remove('hidden');
-                document.getElementById('ldB').classList.add('hidden');
-                document.getElementById('txtB').innerText = "Recalcular mi estudio";
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-            }, 1000);
-        }
-    </script>
-</body>
-</html>
+</script>
+
+<script src="poder-compra.769b4b94.js"></script></body></html>
